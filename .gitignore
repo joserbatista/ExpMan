@@ -54,3 +54,9 @@ fabric.properties
 # *.iml
 # modules.xml
 .idea/
+frontend/node_modules/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+frontend/src/bower_components/
