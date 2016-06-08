@@ -14,21 +14,25 @@
                 <div class="inset">
                     <ng-md-icon icon="apps"></ng-md-icon>
                 </div>
-                <p> Dashboard </p>
+                <p>
+                    Dashboard
+                </p>
             </md-list-item>
             <md-list-item ng-repeat="item in vm.menu" ng-click="vm.navigateTo('home.' + item.link)">
                 <div class="inset" ng-show="item.icon">
                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                 </div>
-                <p > {{ item.name }}</p>
+                <p >
+                    {{ item.name }}</p>
             </md-list-item>
             <md-divider></md-divider>
             <md-subheader>Admin</md-subheader>
-            <md-list-item ng-repeat="item in vm.admin" ng-click="vm.showSettingsBottom($event)" >
+            <md-list-item ng-repeat="item in vm.admin" ng-click="vm.showSettingsBottom($event)">
                 <div class="inset">
                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
                 </div>
-                <p> {{ item.title }}</p>
+                <p>
+                    {{ item.title }}</p>
             </md-list-item>
         </md-list>
     </div>
@@ -47,7 +51,9 @@
             </md-button>
             <md-menu>
                 <md-button aria-label="Open Settings" ng-click="layout.openMenu($mdOpenMenu, $event)">
-                    <md-icon> more_vert </md-icon>
+                    <md-icon>
+                        more_vert
+                    </md-icon>
                 </md-button>
                 <md-menu-content width="4">
                     <md-menu-item>

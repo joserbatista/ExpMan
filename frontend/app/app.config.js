@@ -1,42 +1,35 @@
+/* global angular, console */
 (function () {
-	'use strict';
+    'use strict';
 
-	/**
-	* @ngdoc configuration file
-	* @name app.config:config
-	* @description
-	* # Config and run block
-	* Configutation of the app
-	*/
+    /**
+     * @ngdoc configuration file
+     * @name app.config:config
+     * @description
+     * # Config and run block
+     * configuration of the app
+     */
 
+    angular
+        .module('expman')
+        .config(configure)
+        .run(runBlock);
 
-	angular
-		.module('expman')
-		.config(configure)
-		.run(runBlock);
+    configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider'];
 
-	configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider'];
+    function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        $locationProvider.hashPrefix('!');
 
-	function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+        // This is required for Browser Sync to work poperly
+        $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-		$locationProvider.hashPrefix('!');
+        $urlRouterProvider.otherwise('/dashboard');
+    }
 
-		// This is required for Browser Sync to work poperly
-		$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+    runBlock.$inject = ['$rootScope'];
 
-		
-			$urlRouterProvider
-			.otherwise('/dashboard');
-			
-			}
-
-			runBlock.$inject = ['$rootScope'];
-
-			function runBlock($rootScope) {
-				'use strict';
-
-				console.log('AngularJS run() function...');
-			}
-
-
-		})();
+    function runBlock($rootScope) {
+        'use strict';
+        console.log('AngularJS run() function...');
+    }
+})();

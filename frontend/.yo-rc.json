@@ -1,9 +1,9 @@
 {
-  "generator-angm": {
-    "appName": "expman",
-    "angularCookies": true,
-    "angularAnimate": true,
-    "angularSanitize": true,
-    "angularMaterial": true
-  }
+    "generator-angm": {
+        "appName": "expman",
+        "angularCookies": true,
+        "angularAnimate": true,
+        "angularSanitize": true,
+        "angularMaterial": true
+    }
 }

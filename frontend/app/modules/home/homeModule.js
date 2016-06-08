@@ -1,13 +1,15 @@
-(function() {
-	'use strict';
+/* global angular */
 
-	/**
-	* @ngdoc function
-	* @name app.module:homeModule
-	* @description
-	* # homeModule
-	* Module of the app
-	*/
+(function () {
+    'use strict';
 
-	angular.module('home', []);
+    /**
+     * @ngdoc function
+     * @name app.module:homeModule
+     * @description
+     * # homeModule
+     * Module of the app
+     */
+
+    angular.module('home', []);
 })();
