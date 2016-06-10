@@ -21,9 +21,25 @@
 
         service.getSidebarItems = function () {
             return [{
-                'icon': 'face',
+                'icon': 'account_balance',
                 'link': '',
-                'name': 'Account'
+                'name': 'Accounts'
+            }, {
+                'icon': 'assessment',
+                'link': '',
+                'name': 'Reports'
+            }, {
+                'icon': 'person',
+                'link': '',
+                'name': 'Payees'
+            }, {
+                'icon': 'label',
+                'link': '',
+                'name': 'Categories'
+            }, {
+                'icon': 'trending_up',
+                'link': '',
+                'name': 'Forecast'
             }];
         }
         return service;

@@ -18,6 +18,7 @@
                     Dashboard
                 </p>
             </md-list-item>
+            <md-divider></md-divider>
             <md-list-item ng-repeat="item in vm.sidebarItems" ng-click="vm.navigateTo('home.' + item.link)">
                 <div class="inset" ng-show="item.icon">
                     <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
@@ -26,13 +27,11 @@
                     {{ item.name }}</p>
             </md-list-item>
             <md-divider></md-divider>
-            <md-subheader></md-subheader>
-            <md-list-item ng-repeat="item in vm.admin" ng-click="vm.showSettingsBottom($event)">
+            <md-list-item ui-sref="login">
                 <div class="inset">
-                    <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    <ng-md-icon icon="exit_to_app"></ng-md-icon>
                 </div>
-                <p>
-                    {{ item.title }}</p>
+                <p>Logout</p>
             </md-list-item>
         </md-list>
     </div>

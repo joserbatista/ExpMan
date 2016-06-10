@@ -33,7 +33,7 @@
         // AngularMaterial Theming
         $mdThemingProvider.theme('default')
             .primaryPalette('blue-grey')
-            .accentPalette('grey');
+            .accentPalette('blue-grey');
         // AngularMaterial icons
         $mdIconProvider.fontSet('md', 'material-icons');
     }
