@@ -1,0 +1,44 @@
+<!-- LoginView.html -->
+<div layout="column" layout-align="center center" layout-fill="layout-fill">
+    <form name="form" ng-submit="form.$valid && vm.login()" novalidate>
+        <div layout="column" class="md-whiteframe-z1 loginColumn">
+            <md-toolbar>
+                <h2 class="md-toolbar-tools">
+                    <span>Login</span>
+                </h2>
+            </md-toolbar>
+            <md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
+            <md-content layout="column" class="md-padding">
+                <!-- Error Message -->
+                <md-input-container class="wk-error-text" ng-show="vm.hasError">
+                    {{ vm.errorText }}
+                </md-input-container>
+
+                <!-- Username Input -->
+                <md-input-container >
+                    <md-icon md-font-set="md">face</md-icon>
+                    <label>Username</label>
+                    <input ng-disabled="vm.isLoading" type="text" name="username" required ng-model="vm.username"/>
+                    <div ng-messages="form.username.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+
+                <!-- Password Input -->
+                <md-input-container>
+                    <md-icon md-font-set="md">lock</md-icon>
+                    <label>Password</label>
+                    <input ng-disabled="vm.isLoading" type="password" name="password" required ng-model="vm.password"/>
+                    <div ng-messages="form.password.$error">
+                        <div ng-message="required">This is required.</div>
+                    </div>
+                </md-input-container>
+
+                <!-- Submit button -->
+                <div layout="row" layout-align="end center" style="padding-top:20px;">
+                    <md-button type="submit" ng-disabled="!form.$valid || vm.isLoading" class="md-raised md-primary">Login</md-button>
+                </div>
+            </md-content>
+        </div>
+    </form>
+</div>

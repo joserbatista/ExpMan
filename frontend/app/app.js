@@ -20,7 +20,7 @@
         'ngCookies',
         'ngAnimate',
         'ngSanitize',
-        'ui.router',
-        'home'
+        'ngStorage',
+        'ui.router'
     ]);
 })();

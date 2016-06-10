@@ -1,0 +1,9 @@
+body {
+    background: #ccc;
+}
+.loginColumn {
+    min-width: 400px;
+}
+.wk-error-text {
+    color: rgb(221, 44, 0);
+}
