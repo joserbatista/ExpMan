@@ -22,21 +22,7 @@
 
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider, $mdIconProvider) {
         // default route
-        $urlRouterProvider.otherwise('/');
-        // app routes
-        $stateProvider
-            .state('home', {
-                url: '/',
-                templateUrl: '/app/modules/home/IndexView.html',
-                controller: 'IndexController',
-                controllerAs: 'vm'
-            })
-            .state('login', {
-                url: '/login',
-                templateUrl: '/app/modules/authentication/LoginView.html',
-                controller: 'LoginController',
-                controllerAs: 'vm'
-            });
+        $urlRouterProvider.otherwise('/dashboard');
 
         // use the HTML5 History API
         //$locationProvider.html5Mode(true);

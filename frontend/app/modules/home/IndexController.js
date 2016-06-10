@@ -6,12 +6,13 @@
         .module('expman')
         .controller('IndexController', Controller);
 
-    function Controller() {
-        //var vm = this;
+    function Controller(IndexService) {
+        var vm = this;
 
         initController();
 
         function initController() {
+            vm.sidebarItems = IndexService.getSidebarItems()
         }
     }
 })();

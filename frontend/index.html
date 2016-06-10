@@ -24,7 +24,7 @@
     </head>
     <body ng-cloak>
         <!-- main app container -->
-        <div ui-view id"content" layout="row" layout-fill class="mainContainer"></div>
+        <div ui-view layout="row" layout-fill></div>
         <!--End-->
 
         <!-- injector:js -->
@@ -44,10 +44,12 @@
         <script src="/src/bower_components/ngstorage/ngStorage.js"></script>
         <script src="/app/app.js"></script>
         <script src="/app/app.config.js"></script>
-        <!-- -->
-        <script src="/app/modules/authentication/AuthenticationService.js"></script>
+        <script src="/app/modules/authentication/LoginRoute.js"></script>
+        <script src="/app/modules/home/IndexRoute.js"></script>
         <script src="/app/modules/authentication/LoginController.js"></script>
         <script src="/app/modules/home/IndexController.js"></script>
+        <script src="/app/modules/authentication/AuthenticationService.js"></script>
+        <script src="/app/modules/home/IndexService.js"></script>
         <!-- endinjector -->
 
     </body>

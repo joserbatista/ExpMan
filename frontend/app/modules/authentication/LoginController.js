@@ -23,7 +23,7 @@
                 vm.errorText =
                     statusCode === 401
                     ? 'Invalid username or password, please try again.'
-                    : 'An unknown error occurred, please try again (' + statusCode + ').';
+                    : 'An unexpected error occurred, please try again (' + statusCode + ').';
             });
         };
 

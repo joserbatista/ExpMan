@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                     'app/app.config.js',
                     'app/modules/**/*Module.js',
                     'app/modules/**/*Route.js',
-                    'app/modules/**/*Ctrl.js',
+                    'app/modules/**/*Controller.js',
                     'app/modules/**/*Service.js',
                     'app/modules/**/*Directive.js'
                 ],
@@ -119,7 +119,7 @@ module.exports = function (grunt) {
                         'app/app.config.js',
                         'app/**/*Module.js',
                         'app/**/*Route.js',
-                        'app/**/*Ctrl.js',
+                        'app/**/*Controller.js',
                         'app/**/*Service.js',
                         'app/**/*Directive.js'
                     ]
