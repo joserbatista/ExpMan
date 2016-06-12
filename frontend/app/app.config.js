@@ -33,12 +33,14 @@
         // AngularMaterial Theming
         $mdThemingProvider.theme('default')
             .primaryPalette('blue-grey')
-            .accentPalette('blue-grey');
+            .accentPalette('grey');
         // AngularMaterial icons
         $mdIconProvider.fontSet('md', 'material-icons');
     }
 
-    function runBlock($rootScope, $http, $location, $localStorage) {
+    function runBlock($rootScope, $http, $location, $localStorage, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
             $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;

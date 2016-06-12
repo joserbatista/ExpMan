@@ -21,6 +21,10 @@ angular.module('expman')
             })
             .state('home.dashboard', {
                 url: '/dashboard',
-                templateUrl: 'app/modules/home/DashboardView.html'
+                templateUrl: 'app/modules/home/DashboardView.html',
+                params: {
+                    title: 'Dashboard',
+                    icon: 'Apps'
+                }
             });
     }]);

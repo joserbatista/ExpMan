@@ -14,20 +14,18 @@
                 <div class="inset">
                     <ng-md-icon icon="apps"></ng-md-icon>
                 </div>
-                <p>
-                    Dashboard
-                </p>
+                <p>Dashboard</p>
             </md-list-item>
             <md-divider></md-divider>
             <md-list-item ng-repeat="item in vm.sidebarItems" ng-click="vm.navigateTo('home.' + item.link)">
                 <div class="inset" ng-show="item.icon">
-                    <ng-md-icon icon="{{item.icon}}"></ng-md-icon>
+                    <ng-md-icon icon="{{ item.icon }}"></ng-md-icon>
                 </div>
                 <p >
                     {{ item.name }}</p>
             </md-list-item>
             <md-divider></md-divider>
-            <md-list-item ui-sref="login">
+            <md-list-item ng-click="vm.logout()">
                 <div class="inset">
                     <ng-md-icon icon="exit_to_app"></ng-md-icon>
                 </div>
@@ -40,10 +38,21 @@
 <div layout="column" class="relative" layout-fill role="main" ng-cloak>
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <md-button ng-click="layout.toggleSidenav('left')" hide-gt-md aria-label="Menu">
+            <md-button ng-click="vm.openLeftMenu()" class="md-icon-button" hide-gt-md aria-label="Menu">
                 <ng-md-icon icon="menu"></ng-md-icon>
             </md-button>
+            <ng-md-icon icon="apps" hide-xs></ng-md-icon>
             <span flex></span>
+            <h2>
+                <span>{{ vm.currentItem.name }}</span>
+            </h2>
+            <span flex></span>
+            <md-button ng-click="vm.logout()" class="md-icon-button" aria-label="Logout">
+                <ng-md-icon icon="exit_to_app"></ng-md-icon>
+                <md-tooltip md-delay="600">
+                    Logout
+                </md-tooltip>
+            </md-button>
         </div>
     </md-toolbar>
 

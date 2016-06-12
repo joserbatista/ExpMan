@@ -6,7 +6,7 @@
         .module('expman')
         .controller('LoginController', Controller);
 
-    function Controller($location, AuthenticationService, $mdToast) {
+    function Controller($location, AuthenticationService, $mdDialog) {
         var vm = this;
         vm.hasError = false;
         vm.isLoading = false;
@@ -15,7 +15,14 @@
             vm.hasError = false;
             vm.isLoading = true;
             AuthenticationService.Login(vm.username, vm.password, function (result) {
-                $location.path('/');
+                AuthenticationService.GetUserData(function () {
+                    $location.path('/');
+                }, function () {
+                    vm.isLoading = false;
+                    vm.hasError = true;
+
+                    vm.errorText = 'Your login succeeded, but an unexpected error occurred. Please try again.';
+                });
             }, function (statusCode) {
                 vm.isLoading = false;
                 vm.hasError = true;
