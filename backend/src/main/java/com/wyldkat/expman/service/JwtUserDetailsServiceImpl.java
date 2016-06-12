@@ -1,8 +1,8 @@
 package com.wyldkat.expman.service;
 
 import com.wyldkat.expman.config.repository.UserRepository;
+import com.wyldkat.expman.model.User;
 import com.wyldkat.expman.modules.security.JwtUserFactory;
-import com.wyldkat.expman.modules.security.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;

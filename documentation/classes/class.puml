@@ -1,0 +1,26 @@
+@startuml
+
+class User {
+Long id
+String username
+String password
+String fullName
+String email
+Boolean enabled
+Date lastPasswordResetDate
+}
+
+class Authority {
+private Long id
+private AuthorityName name
+}
+
+enum AuthorityName {
+ROLE_USER
+ROLE_ADMIN
+}
+
+User *-- Authority
+Authority o-- AuthorityName
+
+@enduml
