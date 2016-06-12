@@ -21,6 +21,10 @@
         'ngAnimate',
         'ngSanitize',
         'ngStorage',
-        'ui.router'
+        'ui.router',
+        'anim-in-out',
+
+        //ExpMan modules
+        'account'
     ]);
 })();

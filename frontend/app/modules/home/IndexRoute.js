@@ -24,7 +24,7 @@ angular.module('expman')
                 templateUrl: 'app/modules/home/DashboardView.html',
                 params: {
                     title: 'Dashboard',
-                    icon: 'Apps'
+                    icon: 'apps'
                 }
             });
     }]);

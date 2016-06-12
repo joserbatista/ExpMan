@@ -10,7 +10,7 @@
             </div>
         </md-toolbar>
         <md-list>
-            <md-list-item ui-sref="home.dashboard">
+            <md-list-item ng-click="vm.navigateTo('home.dashboard')">
                 <div class="inset">
                     <ng-md-icon icon="apps"></ng-md-icon>
                 </div>
@@ -41,7 +41,7 @@
             <md-button ng-click="vm.openLeftMenu()" class="md-icon-button" hide-gt-md aria-label="Menu">
                 <ng-md-icon icon="menu"></ng-md-icon>
             </md-button>
-            <ng-md-icon icon="apps" hide-xs></ng-md-icon>
+            <ng-md-icon icon="{{ vm.currentItem.icon }}" hide-xs></ng-md-icon>
             <span flex></span>
             <h2>
                 <span>{{ vm.currentItem.name }}</span>
@@ -57,6 +57,6 @@
     </md-toolbar>
 
     <md-content layout="column" flex md-scroll-y style="background-color:#DCDCDC">
-        <div ui-view></div>
+        <div id="mainContent" ui-view class="anim-in-out anim-fade" data-anim-speed="400"></div>
     </md-content>
 </div>

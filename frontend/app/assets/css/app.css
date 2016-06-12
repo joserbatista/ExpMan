@@ -1,5 +1,14 @@
 body {
     background: #ccc;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 .loginColumn {
     min-width: 400px;
@@ -38,4 +47,13 @@ code {
 }
 ul {
     list-style: none
+}
+
+#mainContent {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
 }

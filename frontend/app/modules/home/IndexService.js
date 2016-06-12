@@ -22,7 +22,7 @@
         service.getSidebarItems = function () {
             return [{
                 'icon': 'account_balance',
-                'link': '',
+                'link': 'accounts',
                 'name': 'Accounts'
             }, {
                 'icon': 'assessment',

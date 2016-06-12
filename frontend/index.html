@@ -16,6 +16,7 @@
         <!-- injector:css -->
         <link rel="stylesheet" href="/src/bower_components/angular-material-icons/angular-material-icons.css">
         <link rel="stylesheet" href="/src/bower_components/angular-material/angular-material.css">
+        <link rel="stylesheet" href="/src/bower_components/angular-ui-router-anim-in-out/css/anim-in-out.css">
         <!-- endinjector -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -24,7 +25,7 @@
     </head>
     <body ng-cloak>
         <!-- main app container -->
-        <div ui-view layout="row" layout-fill></div>
+        <div ui-view layout="row" class="anim-in-out anim-fade" data-anim-speed="1000" layout-fill></div>
         <!--End-->
 
         <!-- injector:js -->
@@ -42,12 +43,17 @@
         <script src="/src/bower_components/angular-material-icons/angular-material-icons.min.js"></script>
         <script src="/src/bower_components/angular-material/angular-material.js"></script>
         <script src="/src/bower_components/ngstorage/ngStorage.js"></script>
+        <script src="/src/bower_components/angular-ui-router-anim-in-out/anim-in-out.js"></script>
         <script src="/app/app.js"></script>
         <script src="/app/app.config.js"></script>
+        <script src="/app/modules/account/AccountModule.js"></script>
+        <script src="/app/modules/account/AccountRoute.js"></script>
         <script src="/app/modules/authentication/LoginRoute.js"></script>
         <script src="/app/modules/home/IndexRoute.js"></script>
+        <script src="/app/modules/account/AccountController.js"></script>
         <script src="/app/modules/authentication/LoginController.js"></script>
         <script src="/app/modules/home/IndexController.js"></script>
+        <script src="/app/modules/account/AccountService.js"></script>
         <script src="/app/modules/authentication/AuthenticationService.js"></script>
         <script src="/app/modules/home/IndexService.js"></script>
         <!-- endinjector -->
