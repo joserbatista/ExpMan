@@ -1,7 +1,6 @@
 @startuml
 
 class User {
-Long id
 String username
 String password
 String fullName
@@ -23,4 +22,20 @@ ROLE_ADMIN
 User *-- Authority
 Authority o-- AuthorityName
 
+
+class Account {
+    String name
+    String notes
+    boolean active
+}
+
+enum AccountType {
+    CASH
+    BANK
+    CREDIT_CARD
+    DEBIT_CARD
+    PAYPAL
+}
+Account o-- AccountType
+Account *-- User
 @enduml
