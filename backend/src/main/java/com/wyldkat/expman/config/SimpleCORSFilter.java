@@ -19,17 +19,21 @@ public class SimpleCORSFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+        throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        log.info("intercepting request: " + request.getRequestURI() + " " + request.getHeader("Origin") + " " + request.getMethod());
+        log.info(
+            "intercepting request: " + request.getRequestURI() + " " + request.getHeader("Origin")
+                + " " + request.getMethod());
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, Authorization, X-Requested-With, remember-me");
+        response.setHeader("Access-Control-Allow-Headers",
+            "Content-Type, Accept, Authorization, X-Requested-With, remember-me");
 
         chain.doFilter(req, res);
     }
