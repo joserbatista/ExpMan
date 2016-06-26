@@ -1,0 +1,52 @@
+'<md-dialog flex="40" aria-label="Edit account">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit account
+                {{ account.name }}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-font-set="md" aria-label="Close" class="md-primary">close</md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content layout-padding>
+        <form novalidate name="accountForm">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Name</label>
+                <input md-maxlength="30" required name="name" ng-model="account.name">
+                <div ng-messages="accountForm.name.$error">
+                    <div ng-message="required">This is required.</div>
+                    <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Notes</label>
+                <textarea md-maxlength="150" md-select-on-focus name="notes" ng-model="account.notes"></textarea>
+                <div ng-messages="accountForm.notes.$error">
+                    <div ng-message="md-maxlength">The name has to be less than 150 characters long.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Type</label>
+                <md-select name="type" required ng-model="account.type">
+                    <md-option ng-repeat="type in accountTypes" value="{{type}}">
+                        {{ type | makeTypeReadable}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="accountForm.type.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+                <md-checkbox ng-model="account.active" aria-label="Account Active">
+                    Account active?
+                </md-checkbox>
+            </md-input-container>
+        </form>
+    </md-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button ng-click="cancel()">Cancel</md-button>
+        <md-button ng-click="null" class="md-primary" ng-disabled="accountForm.$invalid">Save</md-button>
+    </md-dialog-actions>
+</md-dialog>

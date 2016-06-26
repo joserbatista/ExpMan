@@ -43,7 +43,7 @@
         $rootScope.$stateParams = $stateParams;
         // keep user logged in after page refresh
         if ($localStorage.currentUser) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
+            $http.defaults.headers.common.Authorization = $localStorage.currentUser.token;
         }
 
         // redirect to login page if not logged in and trying to access a restricted page

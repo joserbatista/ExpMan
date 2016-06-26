@@ -13,12 +13,34 @@
     angular
         .module('account')
         .factory('AccountService', Account);
-    // Inject your dependencies as .$inject = ['$http', 'someSevide'];
-    // function Name ($http, someSevide) {...}
 
-    Account.$inject = ['$http'];
+    function Account($http, $localStorage) {
+        var service = {};
 
-    function Account($http) {
+        service.getUserAccounts = function (successCallback, errorCallback) {
+            $http.get('http://localhost:8080/api/user/account', {}).then(function (response) {
+                if (response.data) {
+                    successCallback(response.data);
+                } else {
+                    errorCallback(401);
+                }
+            }, function (response) {
+                errorCallback(response.status);
+            });
+        };
 
+        service.getAccountTypes = function (successCallback, errorCallback) {
+            $http.get('http://localhost:8080/api/user/account/types', {}).then(function (response) {
+                if (response.data) {
+                    successCallback(response.data);
+                } else {
+                    errorCallback(401);
+                }
+            }, function (response) {
+                errorCallback(response.status);
+            });
+        };
+
+        return service;
     }
 })();
