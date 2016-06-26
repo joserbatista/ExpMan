@@ -1,6 +1,7 @@
 package com.wyldkat.expman.controller;
 
 import com.wyldkat.expman.model.Account;
+import com.wyldkat.expman.model.AccountType;
 import com.wyldkat.expman.modules.security.JwtTokenUtil;
 import com.wyldkat.expman.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class AccountController {
         String username = jwtTokenUtil.getUsernameFromToken(token);
 
         return ResponseEntity.ok(accountService.loadAccountsByOwner(username));
+    }
+
+    @RequestMapping(value = "types", method = RequestMethod.GET)
+    public ResponseEntity<List<AccountType>> getAccountTypes(HttpServletRequest request) {
+
+        return ResponseEntity.ok(accountService.loadAccountTypes());
     }
 
 }

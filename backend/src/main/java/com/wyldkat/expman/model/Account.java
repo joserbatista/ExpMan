@@ -10,7 +10,10 @@ import javax.validation.constraints.NotNull;
 public class Account extends BaseEntity {
 
     @NotNull
+    @Column(length = 30)
     private String name;
+
+    @Column(length = 150)   
     private String notes;
     private boolean active;
 

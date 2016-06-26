@@ -12,12 +12,13 @@ import java.util.List;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username", unique = true, length = 35)
     private String username;
     @NotNull
     @JsonIgnore
     private String password;
 
+    @Column(length = 150)
     private String fullName;
 
     @Column(name = "email", unique = true)
