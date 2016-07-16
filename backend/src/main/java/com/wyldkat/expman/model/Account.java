@@ -1,7 +1,5 @@
 package com.wyldkat.expman.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,7 +11,7 @@ public class Account extends BaseEntity {
     @Column(length = 30)
     private String name;
 
-    @Column(length = 150)   
+    @Column(length = 150)
     private String notes;
     private boolean active;
 
@@ -22,7 +20,6 @@ public class Account extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private AccountType type;
 
-    @JsonIgnore
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

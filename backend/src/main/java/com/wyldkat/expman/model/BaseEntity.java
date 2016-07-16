@@ -1,18 +1,15 @@
 package com.wyldkat.expman.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Comparable<BaseEntity> {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "created_date")
+    @Column(name = "created_date", updatable = false)
     private Date createdDate = new Date();
 
     @Column(name = "update_date")

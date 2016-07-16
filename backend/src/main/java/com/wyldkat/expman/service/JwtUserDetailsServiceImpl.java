@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service("userDetailsService")
 public class JwtUserDetailsServiceImpl implements UserDetailsService, IUserService {
 
@@ -18,23 +20,23 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService, IUserServi
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        Optional<User> user = loadDomainUserByUsername(username);
 
-        if (user == null) {
-            throw new UsernameNotFoundException(
-                String.format("No user found with username '%s'.", username));
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException(String.format("No user found with username '%s'.", username));
         }
 
-        if (user.getAuthorities().isEmpty()) {
-            throw new InsufficientAuthenticationException(
-                String.format("No authorities found for username '%s", username));
+        User userFromOptional = user.get();
+
+        if (userFromOptional.getAuthorities().isEmpty()) {
+            throw new InsufficientAuthenticationException(String.format("No authorities found for username '%s", username));
         }
 
-        return JwtUserFactory.create(user);
+        return JwtUserFactory.create(userFromOptional);
     }
 
     @Override
-    public User loadDomainUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username);
+    public Optional<User> loadDomainUserByUsername(String username) throws UsernameNotFoundException {
+        return Optional.ofNullable(userRepository.findByUsername(username));
     }
 }

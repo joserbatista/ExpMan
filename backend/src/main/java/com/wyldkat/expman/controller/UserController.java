@@ -1,7 +1,8 @@
 package com.wyldkat.expman.controller;
 
+import com.wyldkat.expman.dto.UserDto;
+import com.wyldkat.expman.dto.UserDtoMapper;
 import com.wyldkat.expman.modules.security.JwtTokenUtil;
-import com.wyldkat.expman.modules.security.JwtUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,14 @@ public class UserController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDtoMapper userDtoMapper;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<JwtUser> getAuthenticatedUser(HttpServletRequest request) {
+    public ResponseEntity<UserDto> getAuthenticatedUser(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);
-        return ResponseEntity.ok((JwtUser) userDetailsService.loadUserByUsername(username));
+        return ResponseEntity.ok(userDtoMapper.mapSecurityEntityToDto(userDetailsService.loadUserByUsername(username)));
     }
 
 }

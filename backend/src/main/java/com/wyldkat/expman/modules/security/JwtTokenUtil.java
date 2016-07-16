@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
@@ -16,9 +17,11 @@ import java.util.Map;
 public class JwtTokenUtil implements Serializable {
 
     private static final long serialVersionUID = -3301605591108950415L;
-
     private static final String CLAIM_KEY_USERNAME = "sub";
     private static final String CLAIM_KEY_CREATED = "created";
+
+    @Value("${jwt.header}")
+    private String tokenHeader;
 
     @Value("${jwt.secret}")
     private String secret;
@@ -103,7 +106,12 @@ public class JwtTokenUtil implements Serializable {
         final String username = getUsernameFromToken(token);
         final Date created = getCreatedDateFromToken(token);
         //final Date expiration = getExpirationDateFromToken(token);
-        return (username.equals(user.getUsername()) && !isTokenExpired(token)
-            && !isCreatedBeforeLastPasswordReset(created, user.getLastPasswordResetDate()));
+        return (username.equals(user.getUsername()) && !isTokenExpired(token) && !isCreatedBeforeLastPasswordReset(created,
+            user.getLastPasswordResetDate()));
+    }
+
+    public String getUsernameFromRequest(HttpServletRequest request) {
+        String token = request.getHeader(tokenHeader);
+        return this.getUsernameFromToken(token);
     }
 }

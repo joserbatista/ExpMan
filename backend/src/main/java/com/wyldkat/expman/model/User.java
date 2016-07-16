@@ -1,6 +1,5 @@
 package com.wyldkat.expman.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wyldkat.expman.modules.security.model.Authority;
 
 import javax.persistence.*;
@@ -15,7 +14,6 @@ public class User extends BaseEntity {
     @Column(name = "username", unique = true, length = 35)
     private String username;
     @NotNull
-    @JsonIgnore
     private String password;
 
     @Column(length = 150)
@@ -24,14 +22,11 @@ public class User extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
     private Boolean enabled;
-    @JsonIgnore
     private Date lastPasswordResetDate;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "authority_id", referencedColumnName = "id")})
+    @JoinTable(joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private List<Authority> authorities;
 
     public String getUsername() {
