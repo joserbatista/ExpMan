@@ -1,4 +1,4 @@
-'<md-dialog flex="40" aria-label="Create new account">
+<md-dialog flex="40" aria-label="Create new account">
     <md-toolbar>
         <div class="md-toolbar-tools">
             <h2>Create new account</h2>
@@ -40,9 +40,7 @@
     </md-content>
     <md-dialog-actions layout="row">
         <span flex></span>
-        <md-button ng-click="null">
-            Cancel
-        </md-button>
-        <md-button ng-click="null" class="md-primary" ng-disabled="accountForm.$invalid">Save</md-button>
+        <md-button ng-click="cancel()">Cancel</md-button>
+        <md-button ng-click="create()" class="md-primary" ng-disabled="accountForm.$invalid">Save</md-button>
     </md-dialog-actions>
 </md-dialog>

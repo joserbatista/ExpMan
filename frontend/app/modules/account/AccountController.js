@@ -1,25 +1,25 @@
 /* global angular */
-(function () {
+(function() {
     'use strict';
 
     angular
-            .module('account')
-            .controller('AccountController', Account);
+        .module('account')
+        .controller('AccountController', Account);
 
-    function Account(AccountService, $mdDialog, $mdMedia) {
+    function Account(AccountService, $mdDialog, $mdMedia, $mdToast) {
         var vm = this;
         vm.userAccounts = [];
 
-            // fetch all accounts for the current user
-        vm.getUserAccounts = function () {
-            AccountService.getUserAccounts(function (response) {
+        // fetch all accounts for the current user
+        vm.getUserAccounts = function() {
+            AccountService.getUserAccounts(function(response) {
                 vm.userAccounts = response;
-            }, function (statusCode) {
-                    //FIXME show error message
+            }, function(statusCode) {
+                //FIXME show error message
             });
         };
 
-            // map account enum to icon name
+        // map account enum to icon name
         vm.accountTypeIconMapping = {
             'CASH': 'euro_symbol',
             'BANK': 'account_balance',
@@ -28,37 +28,54 @@
             'PAYPAL': 'card_membership'
         };
 
-            // show new account dialog
-            // TODO do server request, update table
-        vm.showNewAccountDialog = function ($event) {
+        // show new account dialog
+        // TODO update table
+        vm.showNewAccountDialog = function($event) {
             $mdDialog.show({
                 fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
                 controller: NewAccountDialogController,
                 templateUrl: 'app/modules/account/AccountNewDialogView.html',
                 targetEvent: $event
-            }).then(function () {}, function () {});
+            }).then(function(account) {
+                vm.getUserAccounts();
+                $mdToast.show(
+                    $mdToast.simple()
+                    .position('top right')
+                    .textContent('Account \"' + account.name + '\" created.')
+                    .hideDelay(3000)
+                );
+            }, function() {});
 
             function NewAccountDialogController($scope, $mdDialog, AccountService) {
                 var dm = $scope;
                 dm.accountTypes = [];
-                dm.cancel = function () {
-                    $mdDialog.hide();
+                dm.cancel = function() {
+                    $mdDialog.cancel();
                 };
 
-                    // fetch all account types
-                dm.getAccountTypes = function () {
-                    AccountService.getAccountTypes(function (response) {
+                dm.create = function() {
+                    // update account on server
+                    AccountService.createAccount(dm.account, function(response) {
+                        $mdDialog.hide(dm.account);
+                    }, function(statusCode) {
+                        //FIXME show error message
+                    });
+                }
+
+                // fetch all account types
+                dm.getAccountTypes = function() {
+                    AccountService.getAccountTypes(function(response) {
                         dm.accountTypes = response;
-                    }, function (statusCode) {
-                            //FIXME show error message
+                    }, function(statusCode) {
+                        //FIXME show error message
                     });
                 }
             }
         };
 
-            // show edit account dialog
-            // TODO do server request, update table
-        vm.showEditAccountDialog = function ($event, account) {
+        // show edit account dialog
+        // TODO  update table
+        vm.showEditAccountDialog = function($event, account) {
             $mdDialog.show({
                 fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
                 controller: DialogController,
@@ -67,23 +84,39 @@
                 locals: {
                     accountToEdit: angular.copy(account)
                 }
-            }).then(function () {}, function () {});
+            }).then(function() {
+                vm.getUserAccounts();
+                $mdToast.show(
+                    $mdToast.simple()
+                    .position('top right')
+                    .textContent('Account \"' + account.name + '\" updated.')
+                    .hideDelay(3000)
+                );
+            }, function() {});
 
             function DialogController($scope, $mdDialog, AccountService, accountToEdit) {
                 var dm = $scope;
                 dm.accountTypes = [];
                 dm.account = accountToEdit;
 
-                dm.cancel = function () {
-                    $mdDialog.hide();
+                dm.cancel = function() {
+                    $mdDialog.cancel();
                 };
 
-                    // fetch all account types
-                AccountService.getAccountTypes(function (response) {
-                    dm.accountTypes = response;
-                    dm.account = accountToEdit;
-                }, function (statusCode) {
+                dm.save = function() {
+                    // update account on server
+                    AccountService.updateAccount(accountToEdit, function(response) {
+                        $mdDialog.hide(accountToEdit);
+                    }, function(statusCode) {
                         //FIXME show error message
+                    });
+                }
+
+                // fetch all account types
+                AccountService.getAccountTypes(function(response) {
+                    dm.accountTypes = response;
+                }, function(statusCode) {
+                    //FIXME show error message
                 });
             }
         };
@@ -93,24 +126,24 @@
         function initController() {
             vm.getUserAccounts();
         };
-    }
+    };
 
-    angular.module('account').filter('makeTypeReadable', function () {
-        return function (item) {
+    angular.module('account').filter('makeTypeReadable', function() {
+        return function(item) {
             if (angular.isUndefined(item)) return item;
 
             return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
-                    // Replaces any - or _ characters with a space
-                    .replace(/[-_]+/g, ' ')
-                    // Uppercases the first character in each group immediately following a space
-                    // (delimited by spaces)
-                    .replace(/ (.)/g, function ($1) {
-                        return $1.toUpperCase();
-                    }) || item;
+                // Replaces any - or _ characters with a space
+                .replace(/[-_]+/g, ' ')
+                // Uppercases the first character in each group immediately following a space
+                // (delimited by spaces)
+                .replace(/ (.)/g, function($1) {
+                    return $1.toUpperCase();
+                }) || item;
         };
     });
-    angular.module('account').filter('makeNumberEuro', function () {
-        return function (item) {
+    angular.module('account').filter('makeNumberEuro', function() {
+        return function(item) {
             if (angular.isUndefined(item)) return item;
 
             return item.toFixed(2) + ' €';

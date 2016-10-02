@@ -1,5 +1,5 @@
 /* global angular */
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -17,26 +17,54 @@
     function Account($http, $localStorage) {
         var service = {};
 
-        service.getUserAccounts = function (successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/account', {}).then(function (response) {
+        // function to get user accounts
+        service.getUserAccounts = function(successCallback, errorCallback) {
+            $http.get('http://localhost:8080/api/user/account', {}).then(function(response) {
                 if (response.data) {
                     successCallback(response.data);
                 } else {
                     errorCallback(401);
                 }
-            }, function (response) {
+            }, function(response) {
                 errorCallback(response.status);
             });
         };
 
-        service.getAccountTypes = function (successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/account/types', {}).then(function (response) {
+        // functions to get account types
+        service.getAccountTypes = function(successCallback, errorCallback) {
+            $http.get('http://localhost:8080/api/user/account/types', {}).then(function(response) {
                 if (response.data) {
                     successCallback(response.data);
                 } else {
                     errorCallback(401);
                 }
-            }, function (response) {
+            }, function(response) {
+                errorCallback(response.status);
+            });
+        };
+
+        // function to update account
+        service.updateAccount = function(account, successCallback, errorCallback) {
+            $http.post('http://localhost:8080/api/user/account/edit', account).then(function(response) {
+                if (response.data) {
+                    successCallback();
+                } else {
+                    errorCallback(401);
+                }
+            }, function(response) {
+                errorCallback(response.status);
+            });
+        };
+
+        // function to create account
+        service.createAccount = function(account, successCallback, errorCallback) {
+            $http.post('http://localhost:8080/api/user/account', account).then(function(response) {
+                if (response.data) {
+                    successCallback();
+                } else {
+                    errorCallback(401);
+                }
+            }, function(response) {
                 errorCallback(response.status);
             });
         };
