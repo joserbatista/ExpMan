@@ -56,30 +56,30 @@ public class AccountController {
         return ResponseEntity.ok(accountService.loadTypes());
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public ResponseEntity<Boolean> updateAccountForCurrentUser(HttpServletRequest request, @RequestBody AccountDto account) {
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public ResponseEntity updateAccountForCurrentUser(HttpServletRequest request, @RequestBody AccountDto account) {
         getCurrentUserAccountById(request, Long.valueOf(account.getId()));
 
         boolean saved =
-            accountService.saveForUser(accountMapper.mapDtoToEntity(account), jwtTokenUtil.getUsernameFromRequest(request));
+                accountService.saveForUser(accountMapper.mapDtoToEntity(account), jwtTokenUtil.getUsernameFromRequest(request));
 
         if (!saved) {
             throw new InternalServerErrorException();
         } else {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(new IdOnlyDto(account.getId()));
         }
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<IdOnlyDto> createAccountForCurrentUser(HttpServletRequest request,
-        @RequestBody AccountDto account) {
+                                                                 @RequestBody AccountDto account) {
 
         if (!Strings.isNullOrEmpty(account.getId())) {
-            throw new InvalidParameterException("You should not set the account ID");
+            throw new InvalidParameterException("You should not set the account id");
         }
 
         Account saved = accountService
-            .createForUser(accountMapper.mapDtoToEntity(account), jwtTokenUtil.getUsernameFromRequest(request));
+                .createForUser(accountMapper.mapDtoToEntity(account), jwtTokenUtil.getUsernameFromRequest(request));
 
         return ResponseEntity.ok(new IdOnlyDto(Long.toString(saved.getId())));
     }
