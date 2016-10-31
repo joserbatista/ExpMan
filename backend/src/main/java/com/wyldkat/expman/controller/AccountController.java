@@ -23,14 +23,18 @@ import java.util.Optional;
 @RequestMapping("api/user/account")
 public class AccountController {
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
+
+    private final IAccountService accountService;
+
+    private final AccountDtoMapper accountMapper;
 
     @Autowired
-    private IAccountService accountService;
-
-    @Autowired
-    private AccountDtoMapper accountMapper;
+    public AccountController(AccountDtoMapper accountMapper, IAccountService accountService, JwtTokenUtil jwtTokenUtil) {
+        this.accountMapper = accountMapper;
+        this.accountService = accountService;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<AccountDto>> getCurrentUserAccounts(HttpServletRequest request) {
@@ -57,7 +61,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public ResponseEntity updateAccountForCurrentUser(HttpServletRequest request, @RequestBody AccountDto account) {
+    public ResponseEntity<IdOnlyDto> updateAccountForCurrentUser(HttpServletRequest request, @RequestBody AccountDto account) {
         getCurrentUserAccountById(request, Long.valueOf(account.getId()));
 
         boolean saved =

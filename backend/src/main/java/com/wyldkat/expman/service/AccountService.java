@@ -16,11 +16,15 @@ import java.util.Optional;
 @Service("accountService")
 public class AccountService implements IAccountService {
 
-    @Autowired
-    private IAccountRepository accountRepository;
+    private final IAccountRepository accountRepository;
+
+    private final IUserService userDetailsService;
 
     @Autowired
-    private IUserService userDetailsService;
+    public AccountService(IUserService userDetailsService, IAccountRepository accountRepository) {
+        this.userDetailsService = userDetailsService;
+        this.accountRepository = accountRepository;
+    }
 
     @Override
     public List<Account> loadAllByOwner(String username) {

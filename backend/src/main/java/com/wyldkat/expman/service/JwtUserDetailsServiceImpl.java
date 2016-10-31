@@ -15,8 +15,12 @@ import java.util.Optional;
 @Service("userDetailsService")
 public class JwtUserDetailsServiceImpl implements UserDetailsService, IUserService {
 
+    private final IUserRepository userRepository;
+
     @Autowired
-    private IUserRepository userRepository;
+    public JwtUserDetailsServiceImpl(IUserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

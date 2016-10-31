@@ -11,20 +11,24 @@ import java.util.stream.Collectors;
 @Component
 public class AccountDtoMapper extends DtoMapper<AccountDto, Account> {
 
+    private final UserDtoMapper userDtoMapper;
+
     @Autowired
-    private UserDtoMapper userDtoMapper;
+    public AccountDtoMapper(UserDtoMapper userDtoMapper) {
+        this.userDtoMapper = userDtoMapper;
+    }
 
     @Override
     public AccountDto mapEntityToDto(Account account) {
 
         return new AccountDtoBuilder().
-            setName(account.getName()).
-            setId(Long.toString(account.getId())).
-            setActive(account.isActive()).
-            setNotes(account.getNotes()).
-            setOwner(userDtoMapper.mapEntityToDto(account.getOwner())).
-            setType(account.getType() != null ? AccountDto.AccountTypeDto.valueOf(account.getType().name()) : null).
-            build();
+                setName(account.getName()).
+                setId(Long.toString(account.getId())).
+                setActive(account.isActive()).
+                setNotes(account.getNotes()).
+                setOwner(userDtoMapper.mapEntityToDto(account.getOwner())).
+                setType(account.getType() != null ? AccountDto.AccountTypeDto.valueOf(account.getType().name()) : null).
+                build();
     }
 
     @Override

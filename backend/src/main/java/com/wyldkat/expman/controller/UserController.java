@@ -20,13 +20,16 @@ public class UserController {
     @Value("${jwt.header}")
     private String tokenHeader;
 
-    @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final UserDetailsService userDetailsService;
+    private final UserDtoMapper userDtoMapper;
 
     @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private UserDtoMapper userDtoMapper;
+    public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService userDetailsService, UserDtoMapper userDtoMapper) {
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userDetailsService = userDetailsService;
+        this.userDtoMapper = userDtoMapper;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<UserDto> getAuthenticatedUser(HttpServletRequest request) {
