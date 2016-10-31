@@ -8,11 +8,14 @@
 
     function Account(AccountService, $mdDialog, $mdMedia, $mdToast) {
         var vm = this;
+        vm.isLoading = true;
         vm.userAccounts = [];
 
         // fetch all accounts for the current user
         vm.getUserAccounts = function() {
+            vm.isLoading = true;
             AccountService.getUserAccounts(function(response) {
+                vm.isLoading = false;
                 vm.userAccounts = response;
             }, function(statusCode) {
                 //FIXME show error message
@@ -37,13 +40,13 @@
                 templateUrl: 'app/modules/account/AccountNewDialogView.html',
                 targetEvent: $event
             }).then(function(account) {
-                vm.getUserAccounts();
                 $mdToast.show(
                     $mdToast.simple()
                     .position('top right')
                     .textContent('Account \"' + account.name + '\" created.')
                     .hideDelay(3000)
                 );
+                vm.getUserAccounts();
             }, function() {});
 
             function NewAccountDialogController($scope, $mdDialog, AccountService) {
@@ -64,7 +67,9 @@
 
                 // fetch all account types
                 dm.getAccountTypes = function() {
+                    dm.isLoadingTypes = true;
                     AccountService.getAccountTypes(function(response) {
+                        dm.isLoadingTypes = false;
                         dm.accountTypes = response;
                     }, function(statusCode) {
                         //FIXME show error message
@@ -85,13 +90,13 @@
                     accountToEdit: angular.copy(account)
                 }
             }).then(function() {
-                vm.getUserAccounts();
                 $mdToast.show(
                     $mdToast.simple()
                     .position('top right')
                     .textContent('Account \"' + account.name + '\" updated.')
                     .hideDelay(3000)
                 );
+                vm.getUserAccounts();
             }, function() {});
 
             function DialogController($scope, $mdDialog, AccountService, accountToEdit) {
@@ -113,7 +118,9 @@
                 }
 
                 // fetch all account types
+                dm.isLoadingTypes = true;
                 AccountService.getAccountTypes(function(response) {
+                    dm.isLoadingTypes = false;
                     dm.accountTypes = response;
                 }, function(statusCode) {
                     //FIXME show error message

@@ -27,7 +27,7 @@
             </md-input-container>
             <md-input-container class="md-block" flex-gt-sm>
                 <label>Type</label>
-                <md-select name="type" md-on-open="getAccountTypes()" required ng-model="account.type">
+                <md-select md-on-open="getAccountTypes()"	name="type" required ng-model="account.type" ng-disabled="isLoadingTypes">
                     <md-option ng-repeat="type in accountTypes" value="{{type}}">
                         {{ type | makeTypeReadable}}
                     </md-option>
