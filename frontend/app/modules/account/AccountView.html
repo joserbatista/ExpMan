@@ -3,10 +3,16 @@
 
 <div class="md-padding" flex layout-sm="column">
     <div ng-hide="vm.isLoading" class="animation">
+
+        <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="Add" ng-click="vm.showNewAccountDialog($event)">
+            <md-icon md-font-set="md" aria-label="Add" class="md-primary md-raised">add</md-icon>
+        </md-button>
+
         <md-card>
             <md-card-content>
                 <md-list ng-cloak>
                     <md-list-item class="md-3-line" ng-click="null" ng-repeat="account in vm.userAccounts | orderBy: 'name'">
+
                         <md-icon md-font-set="md" aria-label="{{ account.name }}">{{ vm.accountTypeIconMapping[account.type] }}</md-icon>
                         <div class="md-list-item-text" layout="column">
                             <h3>{{ account.name }}</h3>
@@ -20,9 +26,5 @@
                 </md-list>
             </md-card-content>
         </md-card>
-
-        <md-button class="md-fab md-fab-bottom-right" aria-label="Add" ng-click="vm.showNewAccountDialog($event)">
-            <md-icon md-font-set="md" aria-label="Add" class="md-primary md-raised">add</md-icon>
-        </md-button>
     </div>
 </div>

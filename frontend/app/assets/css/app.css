@@ -80,3 +80,8 @@ ul {
 .animation.ng-leave.ng-leave-active {
   opacity: 0;
 }
+
+/* force md-fab to stay on bottom-right */
+.md-fab-bottom-right{
+  position: fixed !important;
+}
