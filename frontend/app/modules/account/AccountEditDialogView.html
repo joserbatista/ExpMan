@@ -45,8 +45,11 @@
         </form>
     </md-content>
     <md-dialog-actions layout="row">
+        <md-button class="md-warn" ng-click="confirmRemove(true)" ng-show="!isConfirmation">Remove</md-button>
+        <md-button class="md-warn" ng-click="remove()" ng-show="isConfirmation">Yes, remove!</md-button>
+        <md-button class="md-primary" ng-click="confirmRemove(false)" ng-show="isConfirmation">Nervermind!</md-button>
         <span flex></span>
         <md-button ng-click="cancel()">Cancel</md-button>
-        <md-button ng-click="save()" class="md-primary" ng-disabled="accountForm.$invalid">Save</md-button>
+        <md-button ng-click="save()" class="md-primary" md-autofocus ng-disabled="accountForm.$invalid">Save</md-button>
     </md-dialog-actions>
 </md-dialog>

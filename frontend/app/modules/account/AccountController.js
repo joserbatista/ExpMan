@@ -89,11 +89,11 @@
                 locals: {
                     accountToEdit: angular.copy(account)
                 }
-            }).then(function() {
+            }).then(function(action) {
                 $mdToast.show(
                     $mdToast.simple()
                     .position('top right')
-                    .textContent('Account \"' + account.name + '\" updated.')
+                    .textContent('Account \"' + account.name + '\" ' + action + '.')
                     .hideDelay(3000)
                 );
                 vm.getUserAccounts();
@@ -102,6 +102,7 @@
             function DialogController($scope, $mdDialog, AccountService, accountToEdit) {
                 var dm = $scope;
                 dm.accountTypes = [];
+                dm.isConfirmation = false;
                 dm.account = accountToEdit;
 
                 dm.cancel = function() {
@@ -111,7 +112,20 @@
                 dm.save = function() {
                     // update account on server
                     AccountService.updateAccount(accountToEdit, function(response) {
-                        $mdDialog.hide(accountToEdit);
+                        $mdDialog.hide('updated');
+                    }, function(statusCode) {
+                        //FIXME show error message
+                    });
+                }
+
+                dm.confirmRemove = function(confirm) {
+                    dm.isConfirmation = confirm;
+                }
+
+                dm.remove = function() {
+                    // update account on server
+                    AccountService.removeAccount(accountToEdit, function(response) {
+                        $mdDialog.hide('removed');
                     }, function(statusCode) {
                         //FIXME show error message
                     });
