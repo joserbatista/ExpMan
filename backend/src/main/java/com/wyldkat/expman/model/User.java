@@ -26,7 +26,7 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "authority_id", referencedColumnName = "id")})
+            @JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private List<Authority> authorities;
 
     public String getUsername() {

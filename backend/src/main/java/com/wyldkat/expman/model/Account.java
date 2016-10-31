@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "accounts")
-public class Account extends BaseEntity {
+public class Account extends OwnedBaseEntity {
 
     @NotNull
     @Column(length = 30)
@@ -19,11 +19,6 @@ public class Account extends BaseEntity {
     @Column(name = "account_type")
     @Enumerated(EnumType.STRING)
     private AccountType type;
-
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User owner;
 
     public String getName() {
         return name;
@@ -57,11 +52,4 @@ public class Account extends BaseEntity {
         this.type = type;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
 }

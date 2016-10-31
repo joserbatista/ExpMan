@@ -2,17 +2,10 @@ package com.wyldkat.expman.dto;
 
 public class IdOnlyDto extends BaseDto {
 
-    private String id;
+    public IdOnlyDto() {
+    }
 
     public IdOnlyDto(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+        super(id);
     }
 }

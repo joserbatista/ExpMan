@@ -1,4 +1,7 @@
-package com.wyldkat.expman.dto;
+package com.wyldkat.expman.dto.mapper;
+
+import com.wyldkat.expman.dto.AccountDto;
+import com.wyldkat.expman.dto.UserDto;
 
 public class AccountDtoBuilder {
     private String id;

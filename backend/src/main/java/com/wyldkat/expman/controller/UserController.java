@@ -1,7 +1,7 @@
 package com.wyldkat.expman.controller;
 
 import com.wyldkat.expman.dto.UserDto;
-import com.wyldkat.expman.dto.UserDtoMapper;
+import com.wyldkat.expman.dto.mapper.UserDtoMapper;
 import com.wyldkat.expman.modules.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,12 +17,11 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("api/user")
 public class UserController {
 
-    @Value("${jwt.header}")
-    private String tokenHeader;
-
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsService userDetailsService;
     private final UserDtoMapper userDtoMapper;
+    @Value("${jwt.header}")
+    private String tokenHeader;
 
     @Autowired
     public UserController(JwtTokenUtil jwtTokenUtil, UserDetailsService userDetailsService, UserDtoMapper userDtoMapper) {

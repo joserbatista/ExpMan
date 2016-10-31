@@ -1,12 +1,12 @@
-package com.wyldkat.expman.dto;
+package com.wyldkat.expman.dto.mapper;
 
-import java.util.Date;
+import com.wyldkat.expman.dto.UserDto;
 
 public class UserDtoBuilder {
     private String username;
     private String email;
     private String fullName;
-    private Date createdDate;
+    private String createdDate;
 
     public UserDtoBuilder setUsername(String username) {
         this.username = username;
@@ -23,7 +23,7 @@ public class UserDtoBuilder {
         return this;
     }
 
-    public UserDtoBuilder setCreatedDate(Date createdDate) {
+    public UserDtoBuilder setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
         return this;
     }

@@ -9,10 +9,11 @@ public class AccountDto extends BaseDto {
     private UserDto owner;
 
     public AccountDto() {
+
     }
 
     public AccountDto(String id, String name, String notes, boolean active, AccountTypeDto type, UserDto owner) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.notes = notes;
         this.active = active;
@@ -58,14 +59,6 @@ public class AccountDto extends BaseDto {
 
     public void setOwner(UserDto owner) {
         this.owner = owner;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public enum AccountTypeDto {

@@ -1,5 +1,8 @@
-package com.wyldkat.expman.dto;
+package com.wyldkat.expman.dto.mapper;
 
+import com.wyldkat.expman.dto.AccountDto;
+import com.wyldkat.expman.dto.DtoMapper;
+import com.wyldkat.expman.dto.IdAndValueDto;
 import com.wyldkat.expman.model.Account;
 import com.wyldkat.expman.model.AccountType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +46,19 @@ public class AccountDtoMapper extends DtoMapper<AccountDto, Account> {
     }
 
     @Override
-    public List<AccountDto> mapEntityListToDtoList(List<Account> accounts) {
-        return accounts.stream().map(this::mapEntityToDto).map(this::stripOwner).collect(Collectors.toList());
+    public Account mapSimpleDtoToEntity(IdAndValueDto idAndValueDto) {
+        Account account = new Account();
+        account.setId(Long.valueOf(idAndValueDto.getId()));
+        account.setName(idAndValueDto.getValue());
+        return account;
     }
 
-    private AccountDto stripOwner(AccountDto accountDto) {
-        accountDto.setOwner(null);
-        return accountDto;
+    @Override
+    public IdAndValueDto mapEntityToSimpleDto(Account account) {
+        return new IdAndValueDto(String.valueOf(account.getId()), account.getName());
     }
 
+    public List<AccountDto.AccountTypeDto> mapTypesDtoToEntity(List<AccountType> accountTypes) {
+        return accountTypes.stream().map(accountType -> AccountDto.AccountTypeDto.valueOf(accountType.name())).collect(Collectors.toList());
+    }
 }

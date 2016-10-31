@@ -13,13 +13,10 @@ import java.util.stream.Collectors;
  * @author José Batista
  */
 public abstract class DtoMapper<D extends BaseDto, E extends BaseEntity> {
-    public D mapEntityToDto(E e) {
-        throw new UnsupportedOperationException();
-    }
 
-    public E mapDtoToEntity(D d) {
-        throw new UnsupportedOperationException();
-    }
+    public abstract E mapDtoToEntity(D d);
+
+    public abstract D mapEntityToDto(E e);
 
     public List<D> mapEntityListToDtoList(List<E> e) {
         return e.stream().map(this::mapEntityToDto).collect(Collectors.toList());
@@ -28,4 +25,22 @@ public abstract class DtoMapper<D extends BaseDto, E extends BaseEntity> {
     public List<E> mapDtoListToEntityList(List<D> d) {
         return d.stream().map(this::mapDtoToEntity).collect(Collectors.toList());
     }
+
+    public List<IdAndValueDto> mapEntityListToSimpleDtoList(List<E> e) {
+        return e.stream().map(this::mapEntityToSimpleDto).collect(Collectors.toList());
+    }
+
+    public List<E> mapSimpleDtoListToEntityList(List<IdAndValueDto> d) {
+        return d.stream().map(this::mapSimpleDtoToEntity).collect(Collectors.toList());
+    }
+
+    public E mapSimpleDtoToEntity(IdAndValueDto account) {
+        throw new UnsupportedOperationException("You must implement mapSimpleDtoToEntity");
+    }
+
+    public IdAndValueDto mapEntityToSimpleDto(E e) {
+        throw new UnsupportedOperationException("You must implement mapEntityToSimpleDto");
+    }
+
+
 }

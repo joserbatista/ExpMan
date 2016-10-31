@@ -23,7 +23,7 @@
  *
  */
 
-package com.wyldkat.expman.controller.exception;
+package com.wyldkat.expman.exception;
 
 
 public class InvalidParameterException extends IllegalArgumentException {

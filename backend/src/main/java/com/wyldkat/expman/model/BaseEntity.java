@@ -1,7 +1,7 @@
 package com.wyldkat.expman.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @MappedSuperclass
 public abstract class BaseEntity implements Comparable<BaseEntity> {
@@ -10,14 +10,14 @@ public abstract class BaseEntity implements Comparable<BaseEntity> {
     private Long id;
 
     @Column(name = "created_date", updatable = false)
-    private Date createdDate = new Date();
+    private ZonedDateTime createdDate = ZonedDateTime.now();
 
     @Column(name = "update_date")
-    private Date updatedDate = new Date();
+    private ZonedDateTime updatedDate = ZonedDateTime.now();
 
     @PreUpdate
     public void setLastUpdate() {
-        updatedDate = new Date();
+        updatedDate = ZonedDateTime.now();
     }
 
     public Long getId() {
@@ -28,11 +28,11 @@ public abstract class BaseEntity implements Comparable<BaseEntity> {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public ZonedDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public Date getUpdatedDate() {
+    public ZonedDateTime getUpdatedDate() {
         return updatedDate;
     }
 

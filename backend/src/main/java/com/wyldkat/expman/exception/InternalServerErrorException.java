@@ -1,4 +1,4 @@
-package com.wyldkat.expman.controller.exception;
+package com.wyldkat.expman.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
