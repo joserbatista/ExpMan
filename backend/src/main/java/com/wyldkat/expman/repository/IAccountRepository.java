@@ -32,6 +32,13 @@ public interface IAccountRepository extends CrudRepository<Account, Long> {
     Account save(Account account);
 
     /**
+     * Delete an account with the specified parameters
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    void delete(Account account);
+
+    /**
      * Find the account with the specified id for the specified owner
      *
      * @param user the account owner

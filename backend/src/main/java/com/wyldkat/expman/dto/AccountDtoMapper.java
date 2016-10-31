@@ -52,4 +52,7 @@ public class AccountDtoMapper extends DtoMapper<AccountDto, Account> {
         return accountDto;
     }
 
+    public List<AccountDto.AccountTypeDto> mapTypesDtoToEntity(List<AccountType> accountTypes) {
+        return accountTypes.stream().map(accountType -> AccountDto.AccountTypeDto.valueOf(accountType.name())).collect(Collectors.toList());
+    }
 }

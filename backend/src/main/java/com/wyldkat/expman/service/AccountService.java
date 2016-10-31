@@ -1,6 +1,7 @@
 package com.wyldkat.expman.service;
 
 import com.wyldkat.expman.controller.exception.InternalServerErrorException;
+import com.wyldkat.expman.controller.exception.InvalidParameterException;
 import com.wyldkat.expman.model.Account;
 import com.wyldkat.expman.model.AccountType;
 import com.wyldkat.expman.model.User;
@@ -69,6 +70,12 @@ public class AccountService implements IAccountService {
         }
 
         return accountSaved.get();
+    }
+
+    @Override
+    public void removeForUser(Long accountId, String username) {
+        accountRepository.delete(this.loadByOwnerAndId(username, accountId)
+                .orElseThrow(InvalidParameterException::new));
     }
 
     private User getUser(String username) {

@@ -8,6 +8,9 @@ public class IdOnlyDto extends BaseDto {
         this.id = id;
     }
 
+    public IdOnlyDto() {
+    }
+
     public String getId() {
         return id;
     }

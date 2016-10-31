@@ -16,4 +16,6 @@ public interface IAccountService {
     Optional<Account> loadByOwnerAndId(String username, Long name);
 
     Account createForUser(Account account, String username);
+
+    void removeForUser(Long accountId, String username);
 }

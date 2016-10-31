@@ -55,9 +55,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "types", method = RequestMethod.GET)
-    public ResponseEntity<List<AccountType>> getAccountTypes() {
+    public ResponseEntity<List<AccountDto.AccountTypeDto>> getAccountTypes() {
 
-        return ResponseEntity.ok(accountService.loadTypes());
+        return ResponseEntity.ok(accountMapper.mapTypesDtoToEntity(accountService.loadTypes()));
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
@@ -72,6 +72,15 @@ public class AccountController {
         } else {
             return ResponseEntity.ok(new IdOnlyDto(account.getId()));
         }
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public ResponseEntity<Void> removeAccountForCurrentUser(HttpServletRequest request, @RequestBody IdOnlyDto account) {
+        Long accountIdLong = Long.valueOf(account.getId());
+        getCurrentUserAccountById(request, accountIdLong);
+        accountService.removeForUser(accountIdLong, jwtTokenUtil.getUsernameFromRequest(request));
+
+        return ResponseEntity.ok(null);
     }
 
     @RequestMapping(method = RequestMethod.POST)
