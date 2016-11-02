@@ -1,7 +1,5 @@
 package com.wyldkat.expman.repository;
 
-import com.wyldkat.expman.model.Category;
-import com.wyldkat.expman.model.Payee;
 import com.wyldkat.expman.model.Transaction;
 import com.wyldkat.expman.model.User;
 import org.springframework.data.repository.CrudRepository;
@@ -18,7 +16,8 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Long
      * Find all transactions owned by a certain user
      *
      * @param owner the transaction owner
-     * @return a list of transactions which owner is the user specified. If no transactions are found, this method returns an empty list
+     * @return a list of transactions which owner is the user specified. If no transactions are found, this method
+     * returns an empty list
      */
     @Override
     List<Transaction> findByOwner(User owner);
@@ -34,7 +33,9 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Long
     Transaction save(Transaction transaction);
 
     /**
-     * Delete an transaction with the specified parameters
+     * Delete a transaction
+     *
+     * @param transaction the transaction to delete for user
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -50,11 +51,58 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Long
     @Override
     Transaction findOneByOwnerAndId(User user, Long id);
 
-    List<Transaction> findByDateBetweenAndCategoryInAndPayeeInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate, List<Category> categories, List<Payee> payees, User user);
-
+    /**
+     * Find all transactions owned by a certain user, filtering by a specific date range
+     *
+     * @param startDate the start date of the search
+     * @param endDate   the end date of the search
+     * @param user      the transactions owner
+     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
+     * returns an empty list
+     */
     List<Transaction> findByDateBetweenAndOwner(ZonedDateTime startDate, ZonedDateTime endDate, User user);
 
-    List<Transaction> findByDateBetweenAndCategoryInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate, List<Category> categories, User user);
+    /**
+     * Find all transactions owned by a certain user, filtering by a specific date range, a list of category names
+     * and a list of payee names
+     *
+     * @param startDate    the start date of the search
+     * @param endDate      the end date of the search
+     * @param categoryList the list of category names to search for
+     * @param payeeList    the list of payee names to search for
+     * @param user         the transactions owner
+     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
+     * returns an empty list
+     */
+    List<Transaction> findByDateBetweenAndCategoryNameInAndPayeeNameInAndOwner(ZonedDateTime startDate,
+                                                                               ZonedDateTime endDate,
+                                                                               List<String> categoryList,
+                                                                               List<String> payeeList,
+                                                                               User user);
 
-    List<Transaction> findByDateBetweenAndPayeeInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate, List<Payee> payees, User user);
+    /**
+     * Find all transactions owned by a certain user, filtering by a specific date range and a list of category names
+     *
+     * @param startDate    the start date of the search
+     * @param endDate      the end date of the search
+     * @param categoryList the list of category names to search for
+     * @param user         the transactions owner
+     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
+     * returns an empty list
+     */
+    List<Transaction> findByDateBetweenAndCategoryNameInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate,
+                                                                 List<String> categoryList, User user);
+
+    /**
+     * Find all transactions owned by a certain user, filtering by a specific date range and a list of payee names
+     *
+     * @param startDate the start date of the search
+     * @param endDate   the end date of the search
+     * @param payeeList the list of payee names to search for
+     * @param user      the transactions owner
+     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
+     * returns an empty list
+     */
+    List<Transaction> findByDateBetweenAndPayeeNameInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate,
+                                                              List<String> payeeList, User user);
 }

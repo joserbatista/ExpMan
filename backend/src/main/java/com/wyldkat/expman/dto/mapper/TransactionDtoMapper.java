@@ -1,17 +1,18 @@
 package com.wyldkat.expman.dto.mapper;
 
-import com.google.common.base.Strings;
 import com.wyldkat.expman.dto.DtoMapper;
-import com.wyldkat.expman.dto.IdAndValueDto;
 import com.wyldkat.expman.dto.TransactionDto;
 import com.wyldkat.expman.dto.TransactionFilterDto;
-import com.wyldkat.expman.model.*;
+import com.wyldkat.expman.model.Transaction;
+import com.wyldkat.expman.model.TransactionBuilder;
+import com.wyldkat.expman.model.TransactionFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by Jos&eacute; Batista on 01/11/2016.
@@ -59,21 +60,17 @@ public class TransactionDtoMapper extends DtoMapper<TransactionDto, Transaction>
     public TransactionFilter mapDtoFilterToEntity(TransactionFilterDto filterDto) {
         TransactionFilter filter = new TransactionFilter();
 
-        List<Category> categories = filter.getCategories();
-        List<Payee> payees = filter.getPayees();
-
-        if (filterDto.getCategoryNames() != null) {
-            filterDto.getCategoryNames().stream().filter(category -> !Strings.isNullOrEmpty(category)).forEach(
-                    category -> categories.add(categoryDtoMapper.mapDtoToEntity(new IdAndValueDto(null, category))));
+        if (!CollectionUtils.isEmpty(filterDto.getCategoryNames())) {
+            filter.setCategories(new ArrayList<>(filterDto.getCategoryNames()));
         }
 
-        if (filterDto.getPayeeNames() != null) {
-            filterDto.getPayeeNames().stream().filter(payee -> !Strings.isNullOrEmpty(payee)).forEach(
-                    payee -> payees.add(payeeDtoMapper.mapDtoToEntity(new IdAndValueDto(null, payee))));
+        if (!CollectionUtils.isEmpty(filterDto.getPayeeNames())) {
+            filter.setPayees(new ArrayList<>(filterDto.getPayeeNames()));
         }
 
         filter.setStartDate(filter.getStartDate());
         filter.setEndDate(filter.getEndDate());
+
         return filter;
     }
 }

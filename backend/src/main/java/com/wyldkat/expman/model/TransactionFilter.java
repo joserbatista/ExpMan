@@ -13,8 +13,8 @@ import java.util.List;
 public class TransactionFilter {
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
-    private List<Category> categories;
-    private List<Payee> payees;
+    private List<String> categories;
+    private List<String> payees;
 
     public ZonedDateTime getStartDate() {
         return startDate;
@@ -34,25 +34,25 @@ public class TransactionFilter {
         this.endDate = (endDate == null) ? ZonedDateTime.now() : endDate;
     }
 
-    public List<Category> getCategories() {
+    public List<String> getCategories() {
         if (categories == null)
             categories = new ArrayList<>();
 
         return categories;
     }
 
-    public void setCategories(List<Category> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
     }
 
-    public List<Payee> getPayees() {
+    public List<String> getPayees() {
         if (payees == null)
             payees = new ArrayList<>();
 
         return payees;
     }
 
-    public void setPayees(List<Payee> payees) {
+    public void setPayees(List<String> payees) {
         this.payees = payees;
     }
 }
