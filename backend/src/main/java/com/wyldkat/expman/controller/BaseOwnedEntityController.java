@@ -42,7 +42,7 @@ public class BaseOwnedEntityController<E extends OwnedBaseEntity, D extends Base
 
         E baseEntity = mapper.mapDtoToEntity(dto);
 
-        E saved = service.saveForUser(baseEntity, jwtTokenUtil.getUsernameFromRequest(request));
+        E saved = service.createForUser(baseEntity, jwtTokenUtil.getUsernameFromRequest(request));
 
         return ResponseEntity.ok(new IdOnlyDto(Long.toString(saved.getId())));
     }
