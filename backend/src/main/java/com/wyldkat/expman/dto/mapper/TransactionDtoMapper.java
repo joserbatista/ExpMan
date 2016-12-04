@@ -4,8 +4,9 @@ import com.wyldkat.expman.dto.DtoMapper;
 import com.wyldkat.expman.dto.TransactionDto;
 import com.wyldkat.expman.dto.TransactionFilterDto;
 import com.wyldkat.expman.model.Transaction;
-import com.wyldkat.expman.model.TransactionBuilder;
 import com.wyldkat.expman.model.TransactionFilter;
+import com.wyldkat.expman.model.builder.TransactionBuilder;
+import com.wyldkat.expman.model.builder.TransactionFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -58,19 +59,23 @@ public class TransactionDtoMapper extends DtoMapper<TransactionDto, Transaction>
     }
 
     public TransactionFilter mapDtoFilterToEntity(TransactionFilterDto filterDto) {
-        TransactionFilter filter = new TransactionFilter();
+        TransactionFilterBuilder filter = new TransactionFilterBuilder();
 
         if (!CollectionUtils.isEmpty(filterDto.getCategoryNames())) {
-            filter.setCategories(new ArrayList<>(filterDto.getCategoryNames()));
+            filter.withCategories(new ArrayList<>(filterDto.getCategoryNames()));
         }
 
         if (!CollectionUtils.isEmpty(filterDto.getPayeeNames())) {
-            filter.setPayees(new ArrayList<>(filterDto.getPayeeNames()));
+            filter.withPayees(new ArrayList<>(filterDto.getPayeeNames()));
         }
 
-        filter.setStartDate(filter.getStartDate());
-        filter.setEndDate(filter.getEndDate());
+        if (!CollectionUtils.isEmpty(filterDto.getAccountNames())) {
+            filter.withAccounts(new ArrayList<>(filterDto.getAccountNames()));
+        }
 
-        return filter;
+        filter.withStartDate(filterDto.getStartDate());
+        filter.withEndDate(filterDto.getEndDate());
+
+        return filter.build();
     }
 }

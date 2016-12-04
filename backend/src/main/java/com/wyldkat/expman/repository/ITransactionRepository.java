@@ -68,41 +68,44 @@ public interface ITransactionRepository extends CrudRepository<Transaction, Long
      *
      * @param startDate    the start date of the search
      * @param endDate      the end date of the search
+     * @param user         the transactions owner
+     * @param accountList  the list of account names to search for
      * @param categoryList the list of category names to search for
      * @param payeeList    the list of payee names to search for
-     * @param user         the transactions owner
      * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
      * returns an empty list
      */
-    List<Transaction> findByDateBetweenAndCategoryNameInAndPayeeNameInAndOwner(ZonedDateTime startDate,
+    List<Transaction> findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameInAndPayeeNameIn(ZonedDateTime startDate,
+                                                                                               ZonedDateTime endDate,
+                                                                                               User user,
+                                                                                               List<String> accountList,
+                                                                                               List<String> categoryList,
+                                                                                               List<String> payeeList);
+
+    List<Transaction> findByDateBetweenAndOwnerAndCategoryNameInAndPayeeNameIn(ZonedDateTime startDate,
                                                                                ZonedDateTime endDate,
+                                                                               User user,
                                                                                List<String> categoryList,
-                                                                               List<String> payeeList,
-                                                                               User user);
+                                                                               List<String> payeeList);
 
-    /**
-     * Find all transactions owned by a certain user, filtering by a specific date range and a list of category names
-     *
-     * @param startDate    the start date of the search
-     * @param endDate      the end date of the search
-     * @param categoryList the list of category names to search for
-     * @param user         the transactions owner
-     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
-     * returns an empty list
-     */
-    List<Transaction> findByDateBetweenAndCategoryNameInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate,
-                                                                 List<String> categoryList, User user);
+    List<Transaction> findByDateBetweenAndOwnerAndPayeeNameIn(ZonedDateTime startDate,
+                                                              ZonedDateTime endDate,
+                                                              User user,
+                                                              List<String> payeeList);
 
-    /**
-     * Find all transactions owned by a certain user, filtering by a specific date range and a list of payee names
-     *
-     * @param startDate the start date of the search
-     * @param endDate   the end date of the search
-     * @param payeeList the list of payee names to search for
-     * @param user      the transactions owner
-     * @return a list of transactions which obeys the specified parameters. If no transactions are found, this method
-     * returns an empty list
-     */
-    List<Transaction> findByDateBetweenAndPayeeNameInAndOwner(ZonedDateTime startDate, ZonedDateTime endDate,
-                                                              List<String> payeeList, User user);
+    List<Transaction> findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameIn(ZonedDateTime startDate,
+                                                                                 ZonedDateTime endDate,
+                                                                                 User user,
+                                                                                 List<String> accountList,
+                                                                                 List<String> categoryList);
+
+    List<Transaction> findByDateBetweenAndOwnerAndCategoryNameIn(ZonedDateTime startDate,
+                                                                 ZonedDateTime endDate,
+                                                                 User user,
+                                                                 List<String> categoryList);
+
+    List<Transaction> findByDateBetweenAndOwnerAndAccountNameIn(ZonedDateTime startDate,
+                                                                ZonedDateTime endDate,
+                                                                User user,
+                                                                List<String> accountList);
 }

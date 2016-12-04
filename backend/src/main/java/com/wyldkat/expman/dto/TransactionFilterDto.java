@@ -1,5 +1,8 @@
 package com.wyldkat.expman.dto;
 
+import com.google.common.base.Strings;
+import org.springframework.util.CollectionUtils;
+
 import java.util.List;
 
 /**
@@ -8,6 +11,7 @@ import java.util.List;
 public class TransactionFilterDto {
     private String startDate;
     private String endDate;
+    private List<String> accountNames;
     private List<String> categoryNames;
     private List<String> payeeNames;
 
@@ -41,5 +45,29 @@ public class TransactionFilterDto {
 
     public void setPayeeNames(List<String> payeeNames) {
         this.payeeNames = payeeNames;
+    }
+
+    public List<String> getAccountNames() {
+        return accountNames;
+    }
+
+    public void setAccountNames(List<String> accountNames) {
+        this.accountNames = accountNames;
+    }
+
+    public boolean isNull() {
+        if (Strings.isNullOrEmpty(startDate) || Strings.isNullOrEmpty(endDate)) {
+            return true;
+        }
+
+        if (CollectionUtils.isEmpty(accountNames)) {
+            return true;
+        }
+
+        if (CollectionUtils.isEmpty(categoryNames) || CollectionUtils.isEmpty(payeeNames)) {
+            return true;
+        }
+
+        return false;
     }
 }

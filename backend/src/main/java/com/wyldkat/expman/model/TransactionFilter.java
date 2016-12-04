@@ -13,8 +13,23 @@ import java.util.List;
 public class TransactionFilter {
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
+    private List<String> accounts;
     private List<String> categories;
     private List<String> payees;
+
+    public TransactionFilter() {
+        // force date defaults
+        this.setStartDate(null);
+        this.setEndDate(null);
+    }
+
+    public TransactionFilter(ZonedDateTime startDate, ZonedDateTime endDate, List<String> accounts, List<String> categories, List<String> payees) {
+        this.setStartDate(startDate);
+        this.setEndDate(endDate);
+        this.accounts = accounts;
+        this.categories = categories;
+        this.payees = payees;
+    }
 
     public ZonedDateTime getStartDate() {
         return startDate;
@@ -54,5 +69,17 @@ public class TransactionFilter {
 
     public void setPayees(List<String> payees) {
         this.payees = payees;
+    }
+
+
+    public List<String> getAccounts() {
+        if (accounts == null)
+            accounts = new ArrayList<>();
+
+        return accounts;
+    }
+
+    public void setAccounts(List<String> accounts) {
+        this.accounts = accounts;
     }
 }

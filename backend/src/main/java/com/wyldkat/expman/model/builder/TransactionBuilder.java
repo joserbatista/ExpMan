@@ -1,4 +1,9 @@
-package com.wyldkat.expman.model;
+package com.wyldkat.expman.model.builder;
+
+import com.wyldkat.expman.model.Account;
+import com.wyldkat.expman.model.Category;
+import com.wyldkat.expman.model.Payee;
+import com.wyldkat.expman.model.Transaction;
 
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
