@@ -1,5 +1,5 @@
 /* global angular */
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -25,6 +25,9 @@
         'anim-in-out',
 
         //ExpMan modules
-        'account'
+        'account',
+        'report',
+        'payee',
+        'category'
     ]);
 })();

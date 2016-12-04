@@ -26,15 +26,15 @@
                 'name': 'Accounts'
             }, {
                 'icon': 'assessment',
-                'link': '',
+                'link': 'reports',
                 'name': 'Reports'
             }, {
                 'icon': 'person',
-                'link': '',
+                'link': 'payees',
                 'name': 'Payees'
             }, {
                 'icon': 'label',
-                'link': '',
+                'link': 'categories',
                 'name': 'Categories'
             }, {
                 'icon': 'trending_up',
