@@ -148,26 +148,4 @@
             vm.getUserAccounts();
         };
     };
-
-    angular.module('account').filter('makeTypeReadable', function() {
-        return function(item) {
-            if (angular.isUndefined(item)) return item;
-
-            return item.charAt(0).toUpperCase() + item.slice(1).toLowerCase()
-                // Replaces any - or _ characters with a space
-                .replace(/[-_]+/g, ' ')
-                // Uppercases the first character in each group immediately following a space
-                // (delimited by spaces)
-                .replace(/ (.)/g, function($1) {
-                    return $1.toUpperCase();
-                }) || item;
-        };
-    });
-    angular.module('account').filter('makeNumberEuro', function() {
-        return function(item) {
-            if (angular.isUndefined(item)) return item;
-
-            return item.toFixed(2) + ' €';
-        };
-    });
 })();

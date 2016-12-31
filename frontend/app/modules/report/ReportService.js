@@ -1,5 +1,5 @@
 /* global angular */
-(function () {
+(function() {
     'use strict';
 
     /**
@@ -21,9 +21,21 @@
     function Report($http) {
         var service = {};
 
-      // function to get user accounts
-        service.getUserAccounts = function(filter, successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/transaction/filter', filter).then(function(response) {
+        // function to get user accounts
+
+        /*
+      {
+        "filter": {
+          "startDate": "2016-01-01T00:00:00+00:00",
+          "endDate": "2016-12-31T23:00:00+00:00",
+          "accountNames": ["Santander", "Carteira"],
+          "categoryNames": ["Diário"],
+          "payeeNames": ["McDonald's"]
+        }
+      }
+      */
+        service.getUserTransactions = function(filter, successCallback, errorCallback) {
+            $http.post('http://localhost:8080/api/user/transaction/filter', filter).then(function(response) {
                 if (response.data || response.status === 200) {
                     successCallback(response.data);
                 } else {
@@ -33,5 +45,7 @@
                 errorCallback(response.status);
             });
         };
+
+        return service;
     }
 })();

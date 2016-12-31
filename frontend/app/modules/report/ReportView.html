@@ -1,7 +1,64 @@
-<div class="md-padding" flex layout-sm="column">
+<!-- ReportView.html -->
+<md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading">
+</md-progress-linear>
+<div style="margin-bottom: 65px;" class="md-padding" flex layout-sm="column">
+  <div ng-hide="vm.isLoading" class="animation">
+    <md-button class="md-fab md-primary md-fab-bottom-right" aria-label="Add" ng-click="vm.showNewTransactionDialog($event)">
+      <md-icon md-font-set="md" aria-label="Add" class="md-primary md-raised">add</md-icon>
+    </md-button>
     <md-card>
-        <md-card-content>
-            <h2 class="md-title">Content from: report page</h2>
-        </md-card-content>
+      <md-card-content>
+        <!-- transaction table -->
+        <div ng-show="vm.transactions.count > 0">
+          <md-table-container>
+            <table class="wk-table-transactions" md-table>
+              <thead md-head>
+                <tr md-row>
+                  <th class="wk-table-transactions-date" md-column>
+                    <span>Date</span>
+                  </th>
+                  <th class="wk-table-transactions-account" hide-sm	hide-xs md-column>
+                    <span>Account</span>
+                  </th>
+                  <th class="wk-table-transactions-category" md-column>
+                    <span>Category</span>
+                  </th>
+                  <th class="wk-table-transactions-payee" hide-sm	hide-xs	md-column>
+                    <span>Payee</span>
+                  </th>
+                  <th class="wk-table-transactions-note" hide-sm	hide-xs md-column>
+                    <span>Note</span>
+                  </th>
+                  <th class="wk-table-transactions-amount" md-column md-numeric>
+                    <span>Amount</span>
+                  </th>
+                  <th class="wk-table-transactions-action" md-column md-numeric>&nbsp;</th>
+                </tr>
+              </thead>
+              <tbody md-body>
+                <tr md-row md-select="transaction" md-select-id="date" md-auto-select ng-repeat="transaction in vm.transactions.list | orderBy: date| limitTo: vm.query.limit: (vm.query.page - 1) * vm.query.limit">
+                  <td md-cell>{{transaction.date | date : medium : timezone}}</td>
+                  <td md-cell hide-sm	hide-xs>{{transaction.account.value}}</td>
+                  <td md-cell>{{transaction.category.value | handleEmptyLabel}}</td>
+                  <td md-cell hide-sm	hide-xs>{{transaction.payee.value | handleEmptyLabel}}</td>
+                  <td md-cell hide-sm	hide-xs>{{transaction.note | handleEmptyLabel}}</td>
+                  <td md-cell>
+                    <span ng-style="transaction.amount !== 0 ? transaction.amount > 0 ? {'color' : 'green'}: {'color' : 'red'} : {}">{{transaction.amount | makeNumberEuro }}</span>
+                  </td>
+                  <td md-cell>
+                    <md-icon md-font-set="md" aria-label="Edit" class="md-secondary md-hue-3" ng-click="vm.showEditAccountDialog($event, account)">edit</md-icon>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+          <md-table-pagination class="wk-table-transactions-paging" md-limit="vm.query.limit" md-page="vm.query.page" md-total="{{vm.transactions.count}}">
+          </md-table-pagination>
+        </div>
+        <div ng-hide="vm.transactions.count > 0">
+          <h2>No transactions found for the provided criteria.</h2>
+        </div>
+      </md-card-content>
     </md-card>
+  </div>
 </div>

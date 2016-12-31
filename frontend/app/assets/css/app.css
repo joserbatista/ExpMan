@@ -15,10 +15,6 @@ body {
     min-width: 400px;
 }
 
-.wk-error-text {
-    color: rgb(221, 44, 0);
-}
-
 md-toolbar:not(.md-hue-1), .md-fab {
     fill: #fff;
 }
@@ -84,4 +80,24 @@ ul {
 /* force md-fab to stay on bottom-right */
 .md-fab-bottom-right{
   position: fixed !important;
+}
+
+/* wk custom */
+.wk-error-text {
+    color: rgb(221, 44, 0);
+}
+
+.wk-label-empty {
+  color: grey;
+  font-style: italic;
+}
+
+.wk-table-transactions th{
+  width: 15%;
+}
+.wk-table-transactions th.wk-table-transactions-note{
+  width: 23%;
+}
+.wk-table-transactions th.wk-table-transactions-action{
+  width: 2%;
 }
