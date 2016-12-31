@@ -2,6 +2,7 @@ package com.wyldkat.expman.controller;
 
 import com.wyldkat.expman.dto.TransactionDto;
 import com.wyldkat.expman.dto.TransactionFilterDto;
+import com.wyldkat.expman.dto.TransactionListDto;
 import com.wyldkat.expman.dto.mapper.TransactionDtoMapper;
 import com.wyldkat.expman.exception.InvalidParameterException;
 import com.wyldkat.expman.model.Transaction;
@@ -36,7 +37,7 @@ public class TransactionController extends BaseOwnedEntityController<Transaction
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "filter")
-    public ResponseEntity<List<TransactionDto>> getCurrentUserEntityListByFilter(HttpServletRequest request, @RequestBody TransactionFilterDto transactionFilterDto) {
+    public ResponseEntity<TransactionListDto> getCurrentUserEntityListByFilter(HttpServletRequest request, @RequestBody TransactionFilterDto transactionFilterDto) {
 
         if (Objects.isNull(transactionFilterDto) || transactionFilterDto.isNull()) {
             throw new InvalidParameterException("Filter must not be null");
@@ -47,7 +48,10 @@ public class TransactionController extends BaseOwnedEntityController<Transaction
         TransactionFilter transactionFilter = mapper.mapDtoFilterToEntity(transactionFilterDto);
         List<Transaction> transactionList = service.loadAllByOwnerAndFilter(username, transactionFilter);
 
-        return ResponseEntity.ok(mapper.mapEntityListToDtoList(transactionList));
+        TransactionListDto response = new TransactionListDto();
+        response.setTransactions(mapper.mapEntityListToDtoList(transactionList));
+
+        return ResponseEntity.ok(response);
     }
 
     @Override

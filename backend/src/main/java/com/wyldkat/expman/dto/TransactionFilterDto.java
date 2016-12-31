@@ -56,18 +56,26 @@ public class TransactionFilterDto {
     }
 
     public boolean isNull() {
-        if (Strings.isNullOrEmpty(startDate) || Strings.isNullOrEmpty(endDate)) {
-            return true;
+        if (!Strings.isNullOrEmpty(startDate)) {
+            return false;
         }
 
-        if (CollectionUtils.isEmpty(accountNames)) {
-            return true;
+        if (!Strings.isNullOrEmpty(endDate)) {
+            return false;
         }
 
-        if (CollectionUtils.isEmpty(categoryNames) || CollectionUtils.isEmpty(payeeNames)) {
-            return true;
+        if (!CollectionUtils.isEmpty(accountNames)) {
+            return false;
         }
 
-        return false;
+        if (!CollectionUtils.isEmpty(categoryNames)) {
+            return false;
+        }
+
+        if (!CollectionUtils.isEmpty(payeeNames)) {
+            return false;
+        }
+
+        return true;
     }
 }

@@ -1,5 +1,6 @@
 package com.wyldkat.expman.model.builder;
 
+import com.google.common.base.Strings;
 import com.wyldkat.expman.model.TransactionFilter;
 
 import java.time.ZonedDateTime;
@@ -24,12 +25,18 @@ public class TransactionFilterBuilder {
     }
 
     public TransactionFilterBuilder withStartDate(String startDate) {
-        this.startDate = ZonedDateTime.parse(startDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        if (!Strings.isNullOrEmpty(startDate)) {
+            this.startDate = ZonedDateTime.parse(startDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        }
+
         return this;
     }
 
     public TransactionFilterBuilder withEndDate(String endDate) {
-        this.endDate = ZonedDateTime.parse(endDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        if (!Strings.isNullOrEmpty(endDate)) {
+            this.endDate = ZonedDateTime.parse(endDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        }
+
         return this;
     }
 
