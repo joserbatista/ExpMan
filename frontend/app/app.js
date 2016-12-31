@@ -23,6 +23,7 @@
         'ngStorage',
         'ui.router',
         'anim-in-out',
+        'md.data.table',
 
         //ExpMan modules
         'account',

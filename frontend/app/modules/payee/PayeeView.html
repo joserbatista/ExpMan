@@ -1,19 +1,22 @@
-<!-- CategoryView.html -->
+<!-- PayeeView.html -->
 <md-progress-linear md-mode="indeterminate" ng-show="vm.isLoading"></md-progress-linear>
 
 <div class="md-padding" flex layout-sm="column">
     <div ng-hide="vm.isLoading" class="animation">
 
-        <md-content>
-            <md-list flex>
-                <md-subheader class="md-no-sticky">All your payees</md-subheader>
-                <md-list-item ng-repeat="payee in vm.payees | orderBy: 'value'">
-                    <p>
-                        {{ payee.value }}
-                    </p>
-                    <md-icon md-font-set="md" aria-label="Remove" ng-click="vm.showConfirmRemoveDialog($event, payee)">clear</md-icon>
-                </md-list-item>
-            </md-list>
-        </md-content>
+          <md-card>
+            <md-card-content>
+              <md-list flex>
+                  <md-subheader class="md-no-sticky">All your payees</md-subheader>
+                  <md-list-item ng-repeat="payee in vm.payees | orderBy: 'value'">
+
+                      <p>
+                          {{ payee.value }}
+                      </p>
+                      <md-icon md-font-set="md" aria-label="Remove" ng-click="vm.showConfirmRemoveDialog($event, payee)">clear</md-icon>
+                  </md-list-item>
+              </md-list>
+            </md-card-content>
+        </md-card>
     </div>
 </div>

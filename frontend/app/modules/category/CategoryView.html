@@ -3,8 +3,8 @@
 
 <div class="md-padding" flex layout-sm="column">
     <div ng-hide="vm.isLoading" class="animation">
-
-        <md-content>
+        <md-card>
+          <md-card-content>
             <md-list flex>
                 <md-subheader class="md-no-sticky">All your categories</md-subheader>
                 <md-list-item ng-repeat="category in vm.categories | orderBy: 'value'">
@@ -14,6 +14,7 @@
                     <md-icon md-font-set="md" aria-label="Remove" ng-click="vm.showConfirmRemoveDialog($event, category)">clear</md-icon>
                 </md-list-item>
             </md-list>
-        </md-content>
-    </div>
+          </md-card-content>
+      </md-card>
+  </div>
 </div>
