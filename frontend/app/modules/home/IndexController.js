@@ -6,7 +6,7 @@
         .module('expman')
         .controller('IndexController', Controller);
 
-    function Controller($location, $state, $mdDialog, $mdSidenav, $rootScope, IndexService) {
+    function Controller($location, $state, $mdDialog, $mdSidenav, $rootScope, $scope, IndexService) {
         var vm = this;
 
         initController();
@@ -40,12 +40,17 @@
                     updateCurrentItem($state);
                 })
             };
+
+            vm.executeToolbarAction = function (action) {
+                $scope.executeToolbarAction(action);
+            };
         }
 
         function updateCurrentItem(newState) {
             vm.currentItem = {
                 name: newState.params.title,
-                icon: newState.params.icon
+                icon: newState.params.icon,
+                toolbarButtons: newState.params.toolbarButtons
             };
         }
     }

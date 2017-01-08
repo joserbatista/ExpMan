@@ -19,7 +19,12 @@ angular.module('report')
                 controllerAs: 'vm',
                 params: {
                     title: 'Reports',
-                    icon: 'assessment'
+                    icon: 'assessment',
+                    toolbarButtons: [{
+                        icon: 'search',
+                        name: 'Filter',
+                        action: 'filterTransactions'
+                    }]
                 }
             });
     }]);
