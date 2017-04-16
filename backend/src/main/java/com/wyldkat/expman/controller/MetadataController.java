@@ -23,6 +23,7 @@ import java.util.List;
  */
 
 @RestController
+
 @RequestMapping("api/user/metadata")
 public class MetadataController {
 

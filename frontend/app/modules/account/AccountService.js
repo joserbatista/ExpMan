@@ -1,5 +1,5 @@
 /* global angular */
-(function() {
+(function () {
     'use strict';
 
     /**
@@ -14,70 +14,70 @@
         .module('account')
         .factory('AccountService', Account);
 
-    function Account($http, $localStorage) {
+    function Account($http, $localStorage, $config) {
         var service = {};
 
         // function to get user accounts
-        service.getUserAccounts = function(successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/account', {}).then(function(response) {
+        service.getUserAccounts = function (successCallback, errorCallback) {
+            $http.get($config.apiUrl + '/user/account', {}).then(function (response) {
                 if (response.data || response.status === 200) {
                     successCallback(response.data);
                 } else {
                     errorCallback(401);
                 }
-            }, function(response) {
+            }, function (response) {
                 errorCallback(response.status);
             });
         };
 
         // functions to get account types
-        service.getAccountTypes = function(successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/account/types', {}).then(function(response) {
+        service.getAccountTypes = function (successCallback, errorCallback) {
+            $http.get($config.apiUrl + '/user/account/types', {}).then(function (response) {
                 if (response.data || response.status === 200) {
                     successCallback(response.data);
                 } else {
                     errorCallback(401);
                 }
-            }, function(response) {
+            }, function (response) {
                 errorCallback(response.status);
             });
         };
 
         // function to update account
-        service.updateAccount = function(account, successCallback, errorCallback) {
-            $http.post('http://localhost:8080/api/user/account/edit', account).then(function(response) {
+        service.updateAccount = function (account, successCallback, errorCallback) {
+            $http.post($config.apiUrl + '/user/account/edit', account).then(function (response) {
                 if (response.data || response.status === 200) {
                     successCallback();
                 } else {
                     errorCallback(401);
                 }
-            }, function(response) {
+            }, function (response) {
                 errorCallback(response.status);
             });
         };
 
         // function to remove account
-        service.removeAccount = function(account, successCallback, errorCallback) {
-            $http.post('http://localhost:8080/api/user/account/remove', account).then(function(response) {
+        service.removeAccount = function (account, successCallback, errorCallback) {
+            $http.post($config.apiUrl + '/user/account/remove', account).then(function (response) {
                 if (response.data || response.status === 200) {
                     successCallback();
                 } else {
                     errorCallback(401);
                 }
-            }, function(response) {
+            }, function (response) {
                 errorCallback(response.status);
             });
         };
 
         // function to create account
-        service.createAccount = function(account, successCallback, errorCallback) {
-            $http.post('http://localhost:8080/api/user/account', account).then(function(response) {
+        service.createAccount = function (account, successCallback, errorCallback) {
+            $http.post($config.apiUrl + '/user/account', account).then(function (response) {
                 if (response.data || response.status === 200) {
                     successCallback();
                 } else {
                     errorCallback(401);
                 }
-            }, function(response) {
+            }, function (response) {
                 errorCallback(response.status);
             });
         };

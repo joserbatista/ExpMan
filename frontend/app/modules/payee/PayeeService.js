@@ -13,17 +13,13 @@
     angular
         .module('payee')
         .factory('PayeeService', Payee);
-    // Inject your dependencies as .$inject = ['$http', 'someSevide'];
-    // function Name ($http, someSevide) {...}
 
-    Payee.$inject = ['$http'];
-
-    function Payee($http) {
+    function Payee($http, $config) {
         var service = {};
 
         // function to get user payees
         service.getUserPayees = function(successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user/payee').then(function(response) {
+            $http.get($config.apiUrl + '/user/payee').then(function(response) {
                 if (response.data || response.status === 200) {
                     successCallback(response.data);
                 } else {

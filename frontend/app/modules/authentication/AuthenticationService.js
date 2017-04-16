@@ -6,7 +6,7 @@
         .module('expman')
         .factory('AuthenticationService', Service);
 
-    function Service($http, $localStorage) {
+    function Service($http, $localStorage, $config) {
         var service = {};
 
         service.Login = Login;
@@ -16,7 +16,7 @@
         return service;
 
         function Login(username, password, successCallback, errorCallback) {
-            $http.post('http://localhost:8080/api/auth', {
+            $http.post($config.apiUrl + '/auth', {
                 username: username,
                 password: password
             }).then(function (response) {
@@ -46,7 +46,7 @@
         }
 
         function GetUserData(successCallback, errorCallback) {
-            $http.get('http://localhost:8080/api/user').then(function (response) {
+            $http.get($config.apiUrl + '/user').then(function (response) {
                 if (response.data) {
                     // store username and token in local storage to keep user logged in between page refreshes
                     $localStorage.currentUserData = response.data;

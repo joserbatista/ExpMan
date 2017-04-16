@@ -1,5 +1,5 @@
 /* global angular */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -12,12 +12,18 @@
         vm.userAccounts = [];
 
         // fetch all accounts for the current user
-        vm.getUserAccounts = function() {
+        vm.getUserAccounts = function () {
             vm.isLoading = true;
-            AccountService.getUserAccounts(function(response) {
+            AccountService.getUserAccounts(function (response) {
                 vm.isLoading = false;
                 vm.userAccounts = response;
-            }, function(statusCode) {
+            }, function (statusCode) {
+
+                if (statusCode == -1) {
+                    alert('ERROR -1');
+                } else {
+                    alert(statusCode);
+                }
                 //FIXME show error message
             });
         };
@@ -33,45 +39,46 @@
 
         // show new account dialog
         // TODO update table
-        vm.showNewAccountDialog = function($event) {
+        vm.showNewAccountDialog = function ($event) {
             $mdDialog.show({
                 fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
                 controller: NewAccountDialogController,
                 templateUrl: 'app/modules/account/AccountNewDialogView.html',
                 targetEvent: $event
-            }).then(function(account) {
+            }).then(function (account) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .position('top right')
-                    .textContent('Account \"' + account.name + '\" created.')
-                    .hideDelay(3000)
+                        .position('top right')
+                        .textContent('Account \"' + account.name + '\" created.')
+                        .hideDelay(3000)
                 );
                 vm.getUserAccounts();
-            }, function() {});
+            }, function () {
+            });
 
             function NewAccountDialogController($scope, $mdDialog, AccountService) {
                 var dm = $scope;
                 dm.accountTypes = [];
-                dm.cancel = function() {
+                dm.cancel = function () {
                     $mdDialog.cancel();
                 };
 
-                dm.create = function() {
+                dm.create = function () {
                     // update account on server
-                    AccountService.createAccount(dm.account, function(response) {
+                    AccountService.createAccount(dm.account, function (response) {
                         $mdDialog.hide(dm.account);
-                    }, function(statusCode) {
+                    }, function (statusCode) {
                         //FIXME show error message
                     });
                 }
 
                 // fetch all account types
-                dm.getAccountTypes = function() {
+                dm.getAccountTypes = function () {
                     dm.isLoadingTypes = true;
-                    AccountService.getAccountTypes(function(response) {
+                    AccountService.getAccountTypes(function (response) {
                         dm.isLoadingTypes = false;
                         dm.accountTypes = response;
-                    }, function(statusCode) {
+                    }, function (statusCode) {
                         //FIXME show error message
                     });
                 }
@@ -80,7 +87,7 @@
 
         // show edit account dialog
         // TODO  update table
-        vm.showEditAccountDialog = function($event, account) {
+        vm.showEditAccountDialog = function ($event, account) {
             $mdDialog.show({
                 fullscreen: ($mdMedia('sm') || $mdMedia('xs')),
                 controller: DialogController,
@@ -89,15 +96,16 @@
                 locals: {
                     accountToEdit: angular.copy(account)
                 }
-            }).then(function(action) {
+            }).then(function (action) {
                 $mdToast.show(
                     $mdToast.simple()
-                    .position('top right')
-                    .textContent('Account \"' + account.name + '\" ' + action + '.')
-                    .hideDelay(3000)
+                        .position('top right')
+                        .textContent('Account \"' + account.name + '\" ' + action + '.')
+                        .hideDelay(3000)
                 );
                 vm.getUserAccounts();
-            }, function() {});
+            }, function () {
+            });
 
             function DialogController($scope, $mdDialog, AccountService, accountToEdit) {
                 var dm = $scope;
@@ -105,38 +113,38 @@
                 dm.isConfirmation = false;
                 dm.account = accountToEdit;
 
-                dm.cancel = function() {
+                dm.cancel = function () {
                     $mdDialog.cancel();
                 };
 
-                dm.save = function() {
+                dm.save = function () {
                     // update account on server
-                    AccountService.updateAccount(accountToEdit, function(response) {
+                    AccountService.updateAccount(accountToEdit, function (response) {
                         $mdDialog.hide('updated');
-                    }, function(statusCode) {
+                    }, function (statusCode) {
                         //FIXME show error message
                     });
-                }
+                };
 
-                dm.confirmRemove = function(confirm) {
+                dm.confirmRemove = function (confirm) {
                     dm.isConfirmation = confirm;
-                }
+                };
 
-                dm.remove = function() {
+                dm.remove = function () {
                     // update account on server
-                    AccountService.removeAccount(accountToEdit, function(response) {
+                    AccountService.removeAccount(accountToEdit, function (response) {
                         $mdDialog.hide('removed');
-                    }, function(statusCode) {
+                    }, function (statusCode) {
                         //FIXME show error message
                     });
-                }
+                };
 
                 // fetch all account types
                 dm.isLoadingTypes = true;
-                AccountService.getAccountTypes(function(response) {
+                AccountService.getAccountTypes(function (response) {
                     dm.isLoadingTypes = false;
                     dm.accountTypes = response;
-                }, function(statusCode) {
+                }, function (statusCode) {
                     //FIXME show error message
                 });
             }

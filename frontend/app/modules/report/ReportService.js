@@ -13,12 +13,8 @@
     angular
         .module('report')
         .factory('ReportService', Report);
-    // Inject your dependencies as .$inject = ['$http', 'someSevide'];
-    // function Name ($http, someSevide) {...}
 
-    Report.$inject = ['$http'];
-
-    function Report($http) {
+    function Report($http, $config) {
         var service = {};
 
         // function to get user accounts
@@ -35,7 +31,7 @@
       }
       */
         service.getUserTransactions = function(filter, successCallback, errorCallback) {
-            $http.post('http://localhost:8080/api/user/transaction/filter', filter).then(function(response) {
+            $http.post($config.apiUrl + '/user/transaction/filter', filter).then(function(response) {
                 if (response.data || response.status === 200) {
                     successCallback(response.data);
                 } else {
