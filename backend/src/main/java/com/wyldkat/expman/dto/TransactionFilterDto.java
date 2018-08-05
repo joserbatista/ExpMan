@@ -55,27 +55,24 @@ public class TransactionFilterDto {
         this.accountNames = accountNames;
     }
 
-    public boolean isNull() {
+    public boolean hasValues() {
         if (!Strings.isNullOrEmpty(startDate)) {
-            return false;
+            return true;
         }
 
         if (!Strings.isNullOrEmpty(endDate)) {
-            return false;
+            return true;
         }
 
         if (!CollectionUtils.isEmpty(accountNames)) {
-            return false;
+            return true;
         }
 
         if (!CollectionUtils.isEmpty(categoryNames)) {
-            return false;
+            return true;
         }
 
-        if (!CollectionUtils.isEmpty(payeeNames)) {
-            return false;
-        }
+        return !CollectionUtils.isEmpty(payeeNames);
 
-        return true;
     }
 }

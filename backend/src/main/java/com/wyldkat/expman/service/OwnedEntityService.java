@@ -15,7 +15,7 @@ public class OwnedEntityService<E extends OwnedBaseEntity, R extends IOwnedEntit
     private final R repository;
     private IUserService userDetailsService;
 
-    public OwnedEntityService(R repository, IUserService userDetailsService) {
+    OwnedEntityService(R repository, IUserService userDetailsService) {
         this.repository = repository;
         this.userDetailsService = userDetailsService;
     }
@@ -68,7 +68,7 @@ public class OwnedEntityService<E extends OwnedBaseEntity, R extends IOwnedEntit
                 .orElseThrow(InvalidParameterException::new));
     }
 
-    protected User getUser(String username) {
+    User getUser(String username) {
         Optional<User> user = userDetailsService.loadDomainUserByUsername(username);
 
         if (!user.isPresent()) {

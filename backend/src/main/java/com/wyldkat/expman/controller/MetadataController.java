@@ -11,8 +11,8 @@ import com.wyldkat.expman.service.ICategoryService;
 import com.wyldkat.expman.service.IPayeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +42,7 @@ public class MetadataController {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "searchableEntities")
+    @GetMapping(value = "searchableEntities")
     public ResponseEntity<SearchableEntitiesDto> getSearchableEntities(HttpServletRequest request) {
 
         String username = jwtTokenUtil.getUsernameFromRequest(request);

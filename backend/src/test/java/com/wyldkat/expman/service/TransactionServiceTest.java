@@ -2,7 +2,6 @@ package com.wyldkat.expman.service;
 
 import com.wyldkat.expman.model.TransactionFilter;
 import com.wyldkat.expman.model.User;
-import com.wyldkat.expman.model.builder.TransactionFilterBuilder;
 import com.wyldkat.expman.repository.ITransactionRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,17 +24,19 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class TransactionServiceTest {
 
-    public static final List<String> STRING_LIST = Arrays.asList("STRING1", "STRING2");
+    private static final List<String> STRING_LIST = Arrays.asList("STRING1", "STRING2");
     private static final String USERNAME = "OWNER";
     private TransactionService transactionService;
     private ITransactionRepository transactionRepository;
     private User user;
-    private TransactionFilterBuilder transactionFilterBuilder;
+    private TransactionFilter.TransactionFilterBuilder transactionFilterBuilder;
 
     @Before
     public void setUp() {
         IUserService userDetailsService = mock(IUserService.class);
-        transactionFilterBuilder = new TransactionFilterBuilder();
+        ZonedDateTime startDate = ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC), ZoneId.systemDefault());
+        ZonedDateTime endDate = ZonedDateTime.now();
+        transactionFilterBuilder = new TransactionFilter.TransactionFilterBuilder(startDate, endDate);
         transactionRepository = mock(ITransactionRepository.class);
         transactionService = new TransactionService(transactionRepository, userDetailsService);
         user = new User();
@@ -50,9 +51,6 @@ public class TransactionServiceTest {
                 withAccounts(null).
                 withCategories(null).
                 withPayees(null).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, transactionFilter);
@@ -67,9 +65,6 @@ public class TransactionServiceTest {
                 withAccounts(null).
                 withCategories(null).
                 withPayees(null).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
@@ -84,9 +79,6 @@ public class TransactionServiceTest {
                 withAccounts(STRING_LIST).
                 withCategories(STRING_LIST).
                 withPayees(null).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
@@ -103,9 +95,6 @@ public class TransactionServiceTest {
                 withAccounts(STRING_LIST).
                 withCategories(STRING_LIST).
                 withPayees(STRING_LIST).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
@@ -122,9 +111,6 @@ public class TransactionServiceTest {
                 withAccounts(null).
                 withCategories(STRING_LIST).
                 withPayees(null).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
@@ -141,9 +127,6 @@ public class TransactionServiceTest {
                 withAccounts(null).
                 withCategories(STRING_LIST).
                 withPayees(STRING_LIST).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
@@ -160,9 +143,6 @@ public class TransactionServiceTest {
                 withAccounts(null).
                 withCategories(null).
                 withPayees(STRING_LIST).
-                withStartDate(ZonedDateTime.of(LocalDateTime.ofEpochSecond(0, 0, ZoneOffset.UTC),
-                        ZoneId.systemDefault())).
-                withEndDate(ZonedDateTime.now()).
                 build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);

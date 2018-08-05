@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class AccountDtoMapper extends DtoMapper<AccountDto, Account> {
+public class AccountDtoMapper implements DtoMapper<AccountDto, Account> {
 
     private final UserDtoMapper userDtoMapper;
 

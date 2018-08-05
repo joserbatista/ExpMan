@@ -7,8 +7,8 @@ import com.wyldkat.expman.modules.security.JwtTokenUtil;
 import com.wyldkat.expman.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class AccountController extends BaseOwnedEntityController<Account, Accoun
         this.accountMapper = accountMapper;
     }
 
-    @RequestMapping(value = "types", method = RequestMethod.GET)
+    @GetMapping(value = "types")
     public ResponseEntity<List<AccountDto.AccountTypeDto>> getAccountTypes() {
         return ResponseEntity.ok(accountMapper.mapTypesDtoToEntity(accountService.loadTypes()));
     }

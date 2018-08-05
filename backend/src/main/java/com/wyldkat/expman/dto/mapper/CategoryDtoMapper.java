@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * Created by joseb on 01/11/2016.
  */
 @Component
-public class CategoryDtoMapper extends DtoMapper<IdAndValueDto, Category> {
+public class CategoryDtoMapper implements DtoMapper<IdAndValueDto, Category> {
     @Override
     public Category mapDtoToEntity(IdAndValueDto idAndValueDto) {
         Category category = new Category();

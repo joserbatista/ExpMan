@@ -11,14 +11,13 @@ import com.wyldkat.expman.modules.security.JwtTokenUtil;
 import com.wyldkat.expman.service.ITransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("api/user/transaction")
@@ -36,10 +35,10 @@ public class TransactionController extends BaseOwnedEntityController<Transaction
         this.mapper = mapper;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "filter")
+    @PostMapping(value = "filter")
     public ResponseEntity<TransactionListDto> getCurrentUserEntityListByFilter(HttpServletRequest request, @RequestBody TransactionFilterDto transactionFilterDto) {
 
-        if (Objects.isNull(transactionFilterDto) || transactionFilterDto.isNull()) {
+        if (transactionFilterDto == null || !transactionFilterDto.hasValues()) {
             throw new InvalidParameterException("Filter must not be null");
         }
 
@@ -56,6 +55,6 @@ public class TransactionController extends BaseOwnedEntityController<Transaction
 
     @Override
     public ResponseEntity<List<TransactionDto>> getCurrentUserEntityList(HttpServletRequest request) {
-        throw new UnsupportedOperationException("You should call get with a filter");
+        throw new UnsupportedOperationException("Get should be called with a filter");
     }
 }

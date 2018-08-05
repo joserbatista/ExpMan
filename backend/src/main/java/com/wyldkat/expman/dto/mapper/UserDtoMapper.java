@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.format.DateTimeFormatter;
 
 @Component
-public class UserDtoMapper extends DtoMapper<UserDto, User> {
+public class UserDtoMapper implements DtoMapper<UserDto, User> {
 
     @Override
     public UserDto mapEntityToDto(User user) {
