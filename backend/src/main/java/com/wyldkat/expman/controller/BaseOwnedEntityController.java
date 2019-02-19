@@ -22,7 +22,7 @@ import java.util.Optional;
 /**
  * Created by Jos&eacute; Batista on 01/11/2016.
  */
-public class BaseOwnedEntityController<E extends OwnedBaseEntity, D extends BaseDto, M extends DtoMapper<D, E>, S extends IOwnedEntityService<E>> {
+public abstract class BaseOwnedEntityController<E extends OwnedBaseEntity, D extends BaseDto, M extends DtoMapper<D, E>, S extends IOwnedEntityService<E>> {
 
     private final M mapper;
     private final S service;
@@ -38,11 +38,10 @@ public class BaseOwnedEntityController<E extends OwnedBaseEntity, D extends Base
     public ResponseEntity<BaseDto> createEntityForCurrentUser(HttpServletRequest request, @RequestBody D dto) {
 
         if (!Strings.isNullOrEmpty(dto.getId())) {
-            throw new InvalidParameterException("You should not set the id");
+            throw new InvalidParameterException("You should not set the id for creation");
         }
 
-        E baseEntity = mapper.mapDtoToEntity(dto);
-
+        E baseEntity = mapper.mapDtoToEntity(dto).orElseThrow(() -> new InternalError("Could not map dto to entity"));
         E saved = service.createForUser(baseEntity, jwtTokenUtil.getUsernameFromRequest(request));
 
         return ResponseEntity.ok(new IdOnlyDto(Long.toString(saved.getId())));
@@ -61,20 +60,29 @@ public class BaseOwnedEntityController<E extends OwnedBaseEntity, D extends Base
     public ResponseEntity<BaseDto> updateAccountForCurrentUser(HttpServletRequest request, @RequestBody D dto) {
         getCurrentUserEntityById(request, Long.valueOf(dto.getId()));
 
-        service.saveForUser(mapper.mapDtoToEntity(dto), jwtTokenUtil.getUsernameFromRequest(request));
+        E entity = mapper.mapDtoToEntity(dto).orElseThrow(() -> new InternalError("Could not map dto to entity"));
+        service.saveForUser(entity, jwtTokenUtil.getUsernameFromRequest(request));
 
         return ResponseEntity.ok(new BaseDto(dto.getId()));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<D> getCurrentUserEntityById(HttpServletRequest request, @PathVariable Long id) {
-        Optional<E> account = service.loadByOwnerAndId(jwtTokenUtil.getUsernameFromRequest(request), id);
-        return ResponseEntity.ok(mapper.mapEntityToDto(account.orElseThrow(ResourceNotFoundException::new)));
+        Optional<E> entityOptional = service.loadByOwnerAndId(jwtTokenUtil.getUsernameFromRequest(request), id);
+
+        E entity = entityOptional.orElseThrow(ResourceNotFoundException::new);
+        D dto = mapper.mapEntityToDto(entity).orElseThrow(() -> new InternalError("Could not map entity to dto"));
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping()
     public ResponseEntity<List<D>> getCurrentUserEntityList(HttpServletRequest request) {
         String username = jwtTokenUtil.getUsernameFromRequest(request);
-        return ResponseEntity.ok(mapper.mapEntityListToDtoList(service.loadAllByOwner(username)));
+
+        List<E> entityList = service.loadAllByOwner(username);
+        List<D> dtoList = mapper.mapEntityListToDtoList(entityList);
+
+        return ResponseEntity.ok(dtoList);
     }
 }

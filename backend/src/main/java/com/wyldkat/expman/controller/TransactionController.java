@@ -36,7 +36,8 @@ public class TransactionController extends BaseOwnedEntityController<Transaction
     }
 
     @PostMapping(value = "filter")
-    public ResponseEntity<TransactionListDto> getCurrentUserEntityListByFilter(HttpServletRequest request, @RequestBody TransactionFilterDto transactionFilterDto) {
+    public ResponseEntity<TransactionListDto> getCurrentUserEntityListByFilter(HttpServletRequest request,
+        @RequestBody TransactionFilterDto transactionFilterDto) {
 
         if (transactionFilterDto == null || !transactionFilterDto.hasValues()) {
             throw new InvalidParameterException("Filter must not be null");

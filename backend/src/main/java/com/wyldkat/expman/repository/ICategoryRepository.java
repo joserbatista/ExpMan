@@ -20,23 +20,6 @@ public interface ICategoryRepository extends CrudRepository<Category, Long>, IOw
     List<Category> findByOwner(User owner);
 
     /**
-     * Save an category with the specified parameters
-     *
-     * @param category the category to save for user
-     * @return the saved category
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    Category save(Category category);
-
-    /**
-     * Delete an category with the specified parameters
-     */
-    @SuppressWarnings("unchecked")
-    @Override
-    void delete(Category category);
-
-    /**
      * Find the category with the specified id for the specified owner
      *
      * @param user the category owner
@@ -44,6 +27,21 @@ public interface ICategoryRepository extends CrudRepository<Category, Long>, IOw
      * @return the category found on the database. If no category is found, this method returns null
      */
     Category findOneByOwnerAndId(User user, Long id);
+
+    /**
+     * Save an category with the specified parameters
+     *
+     * @param category the category to save for user
+     * @return the saved category
+     */
+    @Override
+    Category save(Category category);
+
+    /**
+     * Delete an category with the specified parameters
+     */
+    @Override
+    void delete(Category category);
 
     /**
      * Find the category with the specified name for the specified owner

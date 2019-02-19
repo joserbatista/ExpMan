@@ -17,7 +17,6 @@ public class AccountService extends OwnedEntityService<Account, IAccountReposito
         super(accountRepository, userDetailsService);
     }
 
-
     @Override
     public List<AccountType> loadTypes() {
         return Arrays.asList(AccountType.values());

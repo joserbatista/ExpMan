@@ -1,7 +1,14 @@
 package com.wyldkat.expman.model;
 
-import javax.persistence.*;
+import org.hibernate.annotations.Formula;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "accounts")
@@ -14,6 +21,9 @@ public class Account extends OwnedBaseEntity {
     @Column(length = 150)
     private String notes;
     private boolean active;
+
+    @Formula(value = "(select sum(t.amount) from transactions t where t.account_id = id)")
+    private BigDecimal amount;
 
     @NotNull
     @Column(name = "account_type")
@@ -52,4 +62,11 @@ public class Account extends OwnedBaseEntity {
         this.type = type;
     }
 
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 }

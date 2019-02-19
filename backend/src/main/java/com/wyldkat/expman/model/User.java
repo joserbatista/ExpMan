@@ -2,7 +2,13 @@ package com.wyldkat.expman.model;
 
 import com.wyldkat.expman.modules.security.model.Authority;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +32,7 @@ public class User extends BaseEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
-            @JoinColumn(name = "authority_id", referencedColumnName = "id")})
+        @JoinColumn(name = "authority_id", referencedColumnName = "id")})
     private List<Authority> authorities;
 
     public String getUsername() {

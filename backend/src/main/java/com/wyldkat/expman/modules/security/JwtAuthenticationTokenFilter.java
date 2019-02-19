@@ -1,6 +1,5 @@
 package com.wyldkat.expman.modules.security;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +29,7 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
+        throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String authToken = httpRequest.getHeader(this.tokenHeader);
@@ -42,10 +41,10 @@ public class JwtAuthenticationTokenFilter extends UsernamePasswordAuthentication
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails, null,
-                                userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(userDetails, null,
+                                                            userDetails.getAuthorities());
                 authentication
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+                    .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

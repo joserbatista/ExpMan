@@ -19,8 +19,8 @@ public class JwtUser implements UserDetails {
     private final Date lastPasswordResetDate;
 
     public JwtUser(Long id, String username, String fullName, String email, String password,
-                   Collection<? extends GrantedAuthority> authorities, boolean enabled,
-                   Date lastPasswordResetDate) {
+        Collection<? extends GrantedAuthority> authorities, boolean enabled,
+        Date lastPasswordResetDate) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
@@ -34,6 +34,25 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     public Long getId() {
         return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getPassword() {
+        return password;
     }
 
     @Override
@@ -57,26 +76,6 @@ public class JwtUser implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-
-    public String getEmail() {
-        return email;
-    }
-
-    @JsonIgnore
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
     }
 
     @Override

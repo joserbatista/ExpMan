@@ -34,7 +34,8 @@ public class MetadataController {
     private final JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    public MetadataController(IAccountService accountService, ICategoryService categoryService, IPayeeService payeeService, MetadataDtoMapper mapper, JwtTokenUtil jwtTokenUtil) {
+    public MetadataController(IAccountService accountService, ICategoryService categoryService, IPayeeService payeeService, MetadataDtoMapper mapper,
+        JwtTokenUtil jwtTokenUtil) {
         this.accountService = accountService;
         this.categoryService = categoryService;
         this.payeeService = payeeService;

@@ -1,9 +1,16 @@
 package com.wyldkat.expman.modules.security.model;
 
-
 import com.wyldkat.expman.model.User;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -48,6 +55,7 @@ public class Authority {
     }
 
     public enum AuthorityName {
-        ROLE_USER, ROLE_ADMIN
+        ROLE_USER,
+        ROLE_ADMIN
     }
 }

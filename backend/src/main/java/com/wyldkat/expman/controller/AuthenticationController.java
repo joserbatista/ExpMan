@@ -33,13 +33,12 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "${jwt.route.authentication.path}")
-    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(
-            @RequestBody JwtAuthenticationRequest authenticationRequest) {
+    public ResponseEntity<JwtAuthenticationResponse> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest) {
 
         // Perform the security
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword());
+            new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
+                                                    authenticationRequest.getPassword());
 
         final Authentication authentication = authenticationManager.authenticate(authenticationToken);
 

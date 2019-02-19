@@ -34,12 +34,12 @@ public class OwnedEntityService<E extends OwnedBaseEntity, R extends IOwnedEntit
         entity.setOwner(user);
 
         this.loadByOwnerAndId(username, entity.getId())
-                .orElseThrow(() -> new InvalidParameterException("Entity does not exist for user"));
+            .orElseThrow(() -> new InvalidParameterException("Entity does not exist for user"));
 
         E saved = repository.save(entity);
 
         return Optional.ofNullable(saved).
-                orElseThrow(() -> new InternalServerErrorException("Entity could not be saved!"));
+            orElseThrow(() -> new InternalServerErrorException("Entity could not be saved!"));
     }
 
     @Override
@@ -59,13 +59,13 @@ public class OwnedEntityService<E extends OwnedBaseEntity, R extends IOwnedEntit
         E saved = repository.save(entity);
 
         return Optional.ofNullable(saved).
-                orElseThrow(() -> new InternalServerErrorException("Entity could not be saved!"));
+            orElseThrow(() -> new InternalServerErrorException("Entity could not be saved!"));
     }
 
     @Override
     public void removeForUser(Long id, String username) {
         repository.delete(this.loadByOwnerAndId(username, id)
-                .orElseThrow(InvalidParameterException::new));
+                              .orElseThrow(InvalidParameterException::new));
     }
 
     User getUser(String username) {

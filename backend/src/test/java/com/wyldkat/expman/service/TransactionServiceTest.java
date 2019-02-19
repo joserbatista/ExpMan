@@ -16,7 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Jos&eacute; Batista on 27/11/2016.
@@ -47,110 +50,103 @@ public class TransactionServiceTest {
 
     @Test
     public void loadAllByDateBetweenAndOwner() {
-        TransactionFilter transactionFilter = transactionFilterBuilder.
-                withAccounts(null).
-                withCategories(null).
-                withPayees(null).
-                build();
+        TransactionFilter transactionFilter = transactionFilterBuilder.withAccounts(null)
+                                                                      .withCategories(null)
+                                                                      .withPayees(null)
+                                                                      .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, transactionFilter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwner(transactionFilter.getStartDate(), transactionFilter.getEndDate(), user);
+                                                   findByDateBetweenAndOwner(transactionFilter.getStartDate(), transactionFilter.getEndDate(), user);
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndAccountNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(null).
-                withCategories(null).
-                withPayees(null).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(null)
+                                                           .withCategories(null)
+                                                           .withPayees(null)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwner(filter.getStartDate(), filter.getEndDate(), user);
+                                                   findByDateBetweenAndOwner(filter.getStartDate(), filter.getEndDate(), user);
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndAccountNameInAndCategoryNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(STRING_LIST).
-                withCategories(STRING_LIST).
-                withPayees(null).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(STRING_LIST)
+                                                           .withCategories(STRING_LIST)
+                                                           .withPayees(null)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameIn(
-                        filter.getStartDate(), filter.getEndDate(), user,
-                        filter.getAccounts(), filter.getCategories());
+                                                   findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameIn(
+                                                       filter.getStartDate(), filter.getEndDate(), user,
+                                                       filter.getAccounts(), filter.getCategories());
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndAccountNameInAndCategoryNameInAndPayeeNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(STRING_LIST).
-                withCategories(STRING_LIST).
-                withPayees(STRING_LIST).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(STRING_LIST)
+                                                           .withCategories(STRING_LIST)
+                                                           .withPayees(STRING_LIST)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameInAndPayeeNameIn(
-                        filter.getStartDate(), filter.getEndDate(), user,
-                        filter.getAccounts(), filter.getCategories(), filter.getPayees());
+                                                   findByDateBetweenAndOwnerAndAccountNameInAndCategoryNameInAndPayeeNameIn(
+                                                       filter.getStartDate(), filter.getEndDate(), user,
+                                                       filter.getAccounts(), filter.getCategories(), filter.getPayees());
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndCategoryNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(null).
-                withCategories(STRING_LIST).
-                withPayees(null).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(null)
+                                                           .withCategories(STRING_LIST)
+                                                           .withPayees(null)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwnerAndCategoryNameIn(
-                        filter.getStartDate(), filter.getEndDate(), user,
-                        filter.getCategories());
+                                                   findByDateBetweenAndOwnerAndCategoryNameIn(
+                                                       filter.getStartDate(), filter.getEndDate(), user,
+                                                       filter.getCategories());
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndCategoryNameInAndPayeeNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(null).
-                withCategories(STRING_LIST).
-                withPayees(STRING_LIST).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(null)
+                                                           .withCategories(STRING_LIST)
+                                                           .withPayees(STRING_LIST)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwnerAndCategoryNameInAndPayeeNameIn(
-                        filter.getStartDate(), filter.getEndDate(), user,
-                        filter.getCategories(), filter.getPayees());
+                                                   findByDateBetweenAndOwnerAndCategoryNameInAndPayeeNameIn(
+                                                       filter.getStartDate(), filter.getEndDate(), user,
+                                                       filter.getCategories(), filter.getPayees());
     }
 
     @Test
     public void loadAllByDateBetweenAndOwnerAndPayeeNameIn() {
-        TransactionFilter filter = transactionFilterBuilder.
-                withAccounts(null).
-                withCategories(null).
-                withPayees(STRING_LIST).
-                build();
+        TransactionFilter filter = transactionFilterBuilder.withAccounts(null)
+                                                           .withCategories(null)
+                                                           .withPayees(STRING_LIST)
+                                                           .build();
 
         transactionService.loadAllByOwnerAndFilter(USERNAME, filter);
 
         verify(transactionRepository, times(1)).
-                findByDateBetweenAndOwnerAndPayeeNameIn(
-                        filter.getStartDate(), filter.getEndDate(), user,
-                        filter.getPayees());
+                                                   findByDateBetweenAndOwnerAndPayeeNameIn(
+                                                       filter.getStartDate(), filter.getEndDate(), user,
+                                                       filter.getPayees());
     }
 
 }

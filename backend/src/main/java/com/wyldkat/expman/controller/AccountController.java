@@ -3,6 +3,7 @@ package com.wyldkat.expman.controller;
 import com.wyldkat.expman.dto.AccountDto;
 import com.wyldkat.expman.dto.mapper.AccountDtoMapper;
 import com.wyldkat.expman.model.Account;
+import com.wyldkat.expman.model.AccountType;
 import com.wyldkat.expman.modules.security.JwtTokenUtil;
 import com.wyldkat.expman.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class AccountController extends BaseOwnedEntityController<Account, Accoun
 
     @GetMapping(value = "types")
     public ResponseEntity<List<AccountDto.AccountTypeDto>> getAccountTypes() {
-        return ResponseEntity.ok(accountMapper.mapTypesDtoToEntity(accountService.loadTypes()));
+        List<AccountType> accountTypeList = accountService.loadTypes();
+        List<AccountDto.AccountTypeDto> typesDtoList = accountMapper.mapTypesDtoToEntity(accountTypeList);
+
+        return ResponseEntity.ok(typesDtoList);
     }
 }

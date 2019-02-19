@@ -1,6 +1,11 @@
 package com.wyldkat.expman.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PreUpdate;
 import java.time.ZonedDateTime;
 
 @MappedSuperclass

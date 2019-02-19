@@ -31,27 +31,28 @@ public class TransactionFilter {
     }
 
     public List<String> getCategories() {
-        if (categories == null)
+        if (categories == null) {
             categories = new ArrayList<>();
+        }
 
         return categories;
     }
 
     public List<String> getPayees() {
-        if (payees == null)
+        if (payees == null) {
             payees = new ArrayList<>();
+        }
 
         return payees;
     }
 
-
     public List<String> getAccounts() {
-        if (accounts == null)
+        if (accounts == null) {
             accounts = new ArrayList<>();
+        }
 
         return accounts;
     }
-
 
     public static class TransactionFilterBuilder {
         private ZonedDateTime startDate;

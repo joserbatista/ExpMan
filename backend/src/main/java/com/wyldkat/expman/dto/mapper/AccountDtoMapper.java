@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,43 +23,52 @@ public class AccountDtoMapper implements DtoMapper<AccountDto, Account> {
     }
 
     @Override
-    public AccountDto mapEntityToDto(Account account) {
-
-        return new AccountDtoBuilder().
-                setName(account.getName()).
-                setId(Long.toString(account.getId())).
-                setActive(account.isActive()).
-                setNotes(account.getNotes()).
-                setOwner(userDtoMapper.mapEntityToDto(account.getOwner())).
-                setType(account.getType() != null ? AccountDto.AccountTypeDto.valueOf(account.getType().name()) : null).
-                build();
-    }
-
-    @Override
-    public Account mapDtoToEntity(AccountDto dto) {
+    public Optional<Account> mapDtoToEntity(AccountDto dto) {
         Account account = new Account();
         account.setName(dto.getName());
         account.setNotes(dto.getNotes());
         account.setActive(dto.isActive());
         account.setType(dto.getType() != null ? AccountType.valueOf(dto.getType().name()) : null);
         account.setId(dto.getId() != null ? Long.valueOf(dto.getId()) : null);
-        return account;
+
+        return Optional.of(account);
     }
 
     @Override
-    public Account mapSimpleDtoToEntity(IdAndValueDto idAndValueDto) {
+    public Optional<AccountDto> mapEntityToDto(Account account) {
+
+        AccountDto.AccountDtoBuilder builder = new AccountDto.AccountDtoBuilder();
+
+        userDtoMapper.mapEntityToDto(account.getOwner()).ifPresent(builder::setOwner);
+
+        AccountDto accountDto = builder.setName(account.getName())
+                                       .setId(Long.toString(account.getId()))
+                                       .setActive(account.isActive())
+                                       .setNotes(account.getNotes())
+                                       .setType(account.getType() != null ? AccountDto.AccountTypeDto.valueOf(account.getType().name()) : null)
+                                       .setAmount(account.getAmount())
+                                       .build();
+
+        return Optional.of(accountDto);
+    }
+
+    @Override
+    public Optional<Account> mapSimpleDtoToEntity(IdAndValueDto idAndValueDto) {
         Account account = new Account();
         account.setId(Long.valueOf(idAndValueDto.getId()));
         account.setName(idAndValueDto.getValue());
-        return account;
+        return Optional.of(account);
     }
 
     @Override
-    public IdAndValueDto mapEntityToSimpleDto(Account account) {
-        return new IdAndValueDto(String.valueOf(account.getId()), account.getName());
+    public Optional<IdAndValueDto> mapEntityToSimpleDto(Account account) {
+        IdAndValueDto idAndValueDto = new IdAndValueDto(String.valueOf(account.getId()), account.getName());
+        return Optional.of(idAndValueDto);
     }
 
     public List<AccountDto.AccountTypeDto> mapTypesDtoToEntity(List<AccountType> accountTypes) {
-        return accountTypes.stream().map(accountType -> AccountDto.AccountTypeDto.valueOf(accountType.name())).collect(Collectors.toList());
+        return accountTypes.stream()
+                           .map(Enum::name).map(AccountDto.AccountTypeDto::valueOf)
+                           .collect(Collectors.toList());
     }
 }

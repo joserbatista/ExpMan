@@ -20,6 +20,15 @@ public interface IPayeeRepository extends CrudRepository<Payee, Long>, IOwnedEnt
     List<Payee> findByOwner(User owner);
 
     /**
+     * Find the payee with the specified id for the specified owner
+     *
+     * @param user the payee owner
+     * @param id   the id of the payee to retrieve
+     * @return the payee found on the database. If no payee is found, this method returns null
+     */
+    Payee findOneByOwnerAndId(User user, Long id);
+
+    /**
      * Save an payee with the specified parameters
      *
      * @param payee the payee to save for user
@@ -35,15 +44,6 @@ public interface IPayeeRepository extends CrudRepository<Payee, Long>, IOwnedEnt
     @SuppressWarnings("unchecked")
     @Override
     void delete(Payee payee);
-
-    /**
-     * Find the payee with the specified id for the specified owner
-     *
-     * @param user the payee owner
-     * @param id   the id of the payee to retrieve
-     * @return the payee found on the database. If no payee is found, this method returns null
-     */
-    Payee findOneByOwnerAndId(User user, Long id);
 
     /**
      * Find the payee with the specified name for the specified owner

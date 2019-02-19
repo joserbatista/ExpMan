@@ -1,6 +1,5 @@
 package com.wyldkat.expman.dto;
 
-
 import java.math.BigDecimal;
 
 /**
@@ -15,7 +14,8 @@ public class TransactionDto extends BaseDto {
     private IdAndValueDto payee;
     private String note;
 
-    public TransactionDto(String id, String date, IdAndValueDto account, BigDecimal amount, IdAndValueDto category, IdAndValueDto payee, String note) {
+    private TransactionDto(String id, String date, IdAndValueDto account, BigDecimal amount, IdAndValueDto category, IdAndValueDto payee,
+        String note) {
         super(id);
         this.date = date;
         this.account = account;
@@ -79,5 +79,61 @@ public class TransactionDto extends BaseDto {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public static class TransactionDtoBuilder {
+        private String id;
+        private String date;
+        private IdAndValueDto account;
+        private BigDecimal amount;
+        private IdAndValueDto category;
+        private IdAndValueDto payee;
+        private String note;
+
+        public TransactionDtoBuilder(String id) {
+            this.id = id;
+        }
+
+        public TransactionDtoBuilder withDate(String date) {
+            this.date = date;
+            return this;
+        }
+
+        public TransactionDtoBuilder withAccount(IdAndValueDto account) {
+            this.account = account;
+            return this;
+        }
+
+        public TransactionDtoBuilder withAmount(BigDecimal amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public TransactionDtoBuilder withCategory(IdAndValueDto category) {
+            this.category = category;
+            return this;
+        }
+
+        public TransactionDtoBuilder withPayee(IdAndValueDto payee) {
+            this.payee = payee;
+            return this;
+        }
+
+        public TransactionDtoBuilder withNote(String note) {
+            this.note = note;
+            return this;
+        }
+
+        public TransactionDto build() {
+            TransactionDto transactionDto = new TransactionDto(id);
+            transactionDto.setAccount(account);
+            transactionDto.setAmount(amount);
+            transactionDto.setCategory(category);
+            transactionDto.setDate(date);
+            transactionDto.setNote(note);
+            transactionDto.setPayee(payee);
+            return transactionDto;
+        }
+
     }
 }

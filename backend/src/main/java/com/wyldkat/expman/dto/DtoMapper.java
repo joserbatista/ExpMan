@@ -3,6 +3,7 @@ package com.wyldkat.expman.dto;
 import com.wyldkat.expman.model.BaseEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -14,33 +15,41 @@ import java.util.stream.Collectors;
  */
 public interface DtoMapper<D extends BaseDto, E extends BaseEntity> {
 
-    E mapDtoToEntity(D d);
+    Optional<E> mapDtoToEntity(D d);
 
-    D mapEntityToDto(E e);
+    Optional<D> mapEntityToDto(E e);
 
     default List<D> mapEntityListToDtoList(List<E> e) {
-        return e.stream().map(this::mapEntityToDto).collect(Collectors.toList());
+        return e.stream()
+                .map(this::mapEntityToDto)
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     default List<E> mapDtoListToEntityList(List<D> d) {
-        return d.stream().map(this::mapDtoToEntity).collect(Collectors.toList());
+        return d.stream().map(this::mapDtoToEntity)
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     default List<IdAndValueDto> mapEntityListToSimpleDtoList(List<E> e) {
-        return e.stream().map(this::mapEntityToSimpleDto).collect(Collectors.toList());
+        return e.stream().map(this::mapEntityToSimpleDto)
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toList());
     }
 
     default List<E> mapSimpleDtoListToEntityList(List<IdAndValueDto> d) {
-        return d.stream().map(this::mapSimpleDtoToEntity).collect(Collectors.toList());
+        return d.stream().map(this::mapSimpleDtoToEntity)
+                .filter(Optional::isPresent).map(Optional::get)
+                .collect(Collectors.toList());
     }
 
-    default E mapSimpleDtoToEntity(IdAndValueDto account) {
+    default Optional<E> mapSimpleDtoToEntity(IdAndValueDto account) {
         throw new UnsupportedOperationException("You must implement mapSimpleDtoToEntity");
     }
 
-    default IdAndValueDto mapEntityToSimpleDto(E e) {
+    default Optional<IdAndValueDto> mapEntityToSimpleDto(E e) {
         throw new UnsupportedOperationException("You must implement mapEntityToSimpleDto");
     }
-
 
 }

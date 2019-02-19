@@ -25,7 +25,6 @@
 
 package com.wyldkat.expman.exception;
 
-
 public class InvalidParameterException extends IllegalArgumentException {
 
     public InvalidParameterException() {

@@ -6,31 +6,34 @@ import com.wyldkat.expman.dto.IdAndValueDto;
 import com.wyldkat.expman.model.Category;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * Created by joseb on 01/11/2016.
  */
 @Component
 public class CategoryDtoMapper implements DtoMapper<IdAndValueDto, Category> {
     @Override
-    public Category mapDtoToEntity(IdAndValueDto idAndValueDto) {
+    public Optional<Category> mapDtoToEntity(IdAndValueDto idAndValueDto) {
         Category category = new Category();
         category.setName(idAndValueDto.getValue());
         String id = idAndValueDto.getId();
 
         if (!Strings.isNullOrEmpty(id)) {
             category.setId(Long.valueOf(id));
-
         }
 
-        return category;
+        return Optional.of(category);
     }
 
     @Override
-    public IdAndValueDto mapEntityToDto(Category category) {
+    public Optional<IdAndValueDto> mapEntityToDto(Category category) {
         if (category == null) {
-            return null;
+            return Optional.empty();
         }
 
-        return new IdAndValueDto(String.valueOf(category.getId()), category.getName());
+        IdAndValueDto idAndValueDto = new IdAndValueDto(String.valueOf(category.getId()), category.getName());
+
+        return Optional.of(idAndValueDto);
     }
 }

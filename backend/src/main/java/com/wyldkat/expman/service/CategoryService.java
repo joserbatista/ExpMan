@@ -1,6 +1,5 @@
 package com.wyldkat.expman.service;
 
-
 import com.wyldkat.expman.model.Category;
 import com.wyldkat.expman.model.User;
 import com.wyldkat.expman.repository.ICategoryRepository;

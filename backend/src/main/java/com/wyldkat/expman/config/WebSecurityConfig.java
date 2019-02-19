@@ -31,9 +31,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder)
-            throws Exception {
+        throws Exception {
         authenticationManagerBuilder.userDetailsService(this.userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                                    .passwordEncoder(passwordEncoder());
     }
 
     @Bean
@@ -47,36 +47,38 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+            // we don't need CSRF because our token is invulnerable
+            .csrf().disable()
+
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+
+            // don't create session
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+
+            .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+            // allow anonymous resource requests
+            .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css",
+                         "/**/*.js", "/v2/api-docs").permitAll()
+            .antMatchers("/api/auth/**").permitAll()
+            .anyRequest()
+            .authenticated();
+
+        // Custom JWT based security filter
+        httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
+                                     UsernamePasswordAuthenticationFilter.class);
+
+        // disable page caching
+        httpSecurity.headers().cacheControl();
+    }
+
     @Bean
     public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         JwtAuthenticationTokenFilter authenticationTokenFilter = new JwtAuthenticationTokenFilter();
         authenticationTokenFilter.setAuthenticationManager(authenticationManagerBean());
         return authenticationTokenFilter;
-    }
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                // we don't need CSRF because our token is invulnerable
-                .csrf().disable()
-
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-
-                // don't create session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-
-                .authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-
-                // allow anonymous resource requests
-                .antMatchers(HttpMethod.GET, "/", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css",
-                        "/**/*.js").permitAll().antMatchers("/api/auth/**").permitAll().anyRequest()
-                .authenticated();
-
-        // Custom JWT based security filter
-        httpSecurity.addFilterBefore(authenticationTokenFilterBean(),
-                UsernamePasswordAuthenticationFilter.class);
-
-        // disable page caching
-        httpSecurity.headers().cacheControl();
     }
 }

@@ -7,26 +7,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 @Component
 public class UserDtoMapper implements DtoMapper<UserDto, User> {
 
     @Override
-    public UserDto mapEntityToDto(User user) {
-        return new UserDtoBuilder().
-                setUsername(user.getUsername()).
-                setEmail(user.getEmail()).
-                setFullName(user.getFullName()).
-                setCreatedDate(user.getCreatedDate().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)).build();
-    }
-
-    @Override
-    public User mapDtoToEntity(UserDto userDto) {
+    public Optional<User> mapDtoToEntity(UserDto userDto) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Optional<UserDto> mapEntityToDto(User user) {
+        UserDto userDto = new UserDto.UserDtoBuilder()
+            .setUsername(user.getUsername())
+            .setEmail(user.getEmail())
+            .setFullName(user.getFullName())
+            .setCreatedDate(user.getCreatedDate().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME))
+            .build();
+
+        return Optional.ofNullable(userDto);
+    }
+
     public UserDto mapSecurityEntityToDto(UserDetails user) {
-        return new UserDtoBuilder().
-                setUsername(user.getUsername()).build();
+        return new UserDto.UserDtoBuilder()
+            .setUsername(user.getUsername()).build();
     }
 }

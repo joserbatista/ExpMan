@@ -6,13 +6,15 @@ import com.wyldkat.expman.dto.IdAndValueDto;
 import com.wyldkat.expman.model.Payee;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * Created by joseb on 01/11/2016.
  */
 @Component
 public class PayeeDtoMapper implements DtoMapper<IdAndValueDto, Payee> {
     @Override
-    public Payee mapDtoToEntity(IdAndValueDto idAndValueDto) {
+    public Optional<Payee> mapDtoToEntity(IdAndValueDto idAndValueDto) {
         Payee payee = new Payee();
         payee.setName(idAndValueDto.getValue());
         String id = idAndValueDto.getId();
@@ -22,14 +24,17 @@ public class PayeeDtoMapper implements DtoMapper<IdAndValueDto, Payee> {
 
         }
 
-        return payee;
+        return Optional.of(payee);
     }
 
     @Override
-    public IdAndValueDto mapEntityToDto(Payee payee) {
+    public Optional<IdAndValueDto> mapEntityToDto(Payee payee) {
         if (payee == null) {
-            return null;
+            return Optional.empty();
         }
-        return new IdAndValueDto(String.valueOf(payee.getId()), payee.getName());
+
+        IdAndValueDto idAndValueDto = new IdAndValueDto(String.valueOf(payee.getId()), payee.getName());
+
+        return Optional.of(idAndValueDto);
     }
 }

@@ -23,6 +23,16 @@ public interface IAccountRepository extends CrudRepository<Account, Long>, IOwne
     List<Account> findByOwner(User owner);
 
     /**
+     * Find the account with the specified id for the specified owner
+     *
+     * @param user the account owner
+     * @param id   the id of the account to retrieve
+     * @return the account found on the database. If no account is found, this method returns null
+     */
+    @Override
+    Account findOneByOwnerAndId(User user, Long id);
+
+    /**
      * Save an account with the specified parameters
      *
      * @param account the account to save for user
@@ -35,18 +45,7 @@ public interface IAccountRepository extends CrudRepository<Account, Long>, IOwne
     /**
      * Delete an account with the specified parameters
      */
-    @SuppressWarnings("unchecked")
     @Override
     void delete(Account account);
-
-    /**
-     * Find the account with the specified id for the specified owner
-     *
-     * @param user the account owner
-     * @param id   the id of the account to retrieve
-     * @return the account found on the database. If no account is found, this method returns null
-     */
-    @Override
-    Account findOneByOwnerAndId(User user, Long id);
 
 }
